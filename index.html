@@ -2,8 +2,8 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-<title>Swipe Me 😏</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+<title>TINDA 💘</title>
 
 <style>
 body{
@@ -11,12 +11,24 @@ margin:0;
 font-family:'Poppins',sans-serif;
 background:linear-gradient(135deg,#ff4d88,#ff99aa);
 display:flex;
-justify-content:center;
+flex-direction:column;
 align-items:center;
 height:100vh;
 overflow:hidden;
 }
 
+/* Fake App Header */
+.header{
+width:100%;
+padding:15px;
+text-align:center;
+font-weight:800;
+font-size:24px;
+color:white;
+letter-spacing:2px;
+}
+
+/* Card */
 .card{
 width:90%;
 max-width:350px;
@@ -36,6 +48,28 @@ object-fit:cover;
 transition:opacity 0.3s ease;
 }
 
+/* Dots indicator */
+.dots{
+position:absolute;
+top:10px;
+width:100%;
+text-align:center;
+}
+
+.dot{
+height:6px;
+width:6px;
+margin:3px;
+display:inline-block;
+background:rgba(255,255,255,0.6);
+border-radius:50%;
+}
+
+.active{
+background:white;
+}
+
+/* Info */
 .info{
 padding:15px;
 }
@@ -50,19 +84,22 @@ color:#555;
 margin-top:5px;
 }
 
+/* Like/Nope overlay */
 .overlay{
 position:absolute;
-top:20px;
+top:30px;
 left:20px;
-font-size:30px;
+font-size:35px;
 font-weight:bold;
 opacity:0;
+transform:rotate(-20deg);
 transition:0.3s;
 }
 
 .like{ color:#2ecc71; }
 .nope{ color:#e74c3c; }
 
+/* Buttons */
 .buttons{
 position:absolute;
 bottom:15px;
@@ -72,11 +109,12 @@ text-align:center;
 
 .buttons button{
 margin:10px;
-padding:10px 20px;
+padding:12px 25px;
 border:none;
 border-radius:50px;
 font-size:16px;
 cursor:pointer;
+font-weight:600;
 }
 
 .no-btn{
@@ -89,19 +127,20 @@ background:#2ecc71;
 color:white;
 }
 
+/* Match Screen */
 .match-screen{
 position:fixed;
 top:0;
 left:0;
 width:100%;
 height:100%;
-background:rgba(255,0,100,0.9);
+background:linear-gradient(135deg,#ff4d88,#ff99aa);
 color:white;
 display:flex;
 justify-content:center;
 align-items:center;
 flex-direction:column;
-font-size:40px;
+font-size:42px;
 opacity:0;
 pointer-events:none;
 transition:opacity 0.5s ease;
@@ -117,17 +156,22 @@ pointer-events:auto;
 
 <body>
 
+<div class="header">TINDA 💘</div>
+
 <div class="card" id="card">
+
+<div class="dots" id="dots"></div>
+
 <img id="profilePic" src="profile1.jpg">
 
-<div class="overlay like" id="likeText">LIKE ❤️</div>
-<div class="overlay nope" id="nopeText">NOPE 💔</div>
+<div class="overlay like" id="likeText">LIKE</div>
+<div class="overlay nope" id="nopeText">NOPE</div>
 
 <div class="info">
 <h2>Vikas, 22</h2>
 <div class="tag">
-✔ Professional overthinker<br>
-✔ Makes bad jokes but great memories<br>
+✔ Certified overthinker<br>
+✔ Sends random “did you eat?” texts<br>
 ✔ Loyal AF<br>
 Looking for: Karishma only 💖
 </div>
@@ -141,10 +185,10 @@ Looking for: Karishma only 💖
 </div>
 
 <div class="match-screen" id="matchScreen">
-IT'S A MATCH! 💘<br>
-<span style="font-size:18px; margin-top:15px;">
+IT'S A MATCH! 💘
+<div style="font-size:18px;margin-top:15px;">
 You and Vikas liked each other 😉
-</span>
+</div>
 </div>
 
 <script>
@@ -154,18 +198,35 @@ let startX=0;
 let photos=["profile1.jpg","profile2.jpg","profile3.jpg"];
 let photoIndex=0;
 let img=document.getElementById("profilePic");
+let dotsContainer=document.getElementById("dots");
+
+/* Create dots */
+photos.forEach((_,i)=>{
+let dot=document.createElement("span");
+dot.className="dot";
+if(i===0) dot.classList.add("active");
+dotsContainer.appendChild(dot);
+});
+
+function updateDots(){
+let dots=document.querySelectorAll(".dot");
+dots.forEach(d=>d.classList.remove("active"));
+dots[photoIndex].classList.add("active");
+}
 
 function nextPhoto(){
 photoIndex=(photoIndex+1)%photos.length;
 img.style.opacity=0;
 setTimeout(()=>{
 img.src=photos[photoIndex];
+updateDots();
 img.style.opacity=1;
 },200);
 }
 
 img.addEventListener("click",nextPhoto);
 
+/* Swipe gestures */
 card.addEventListener("touchstart",function(e){
 startX=e.touches[0].clientX;
 });
@@ -182,6 +243,7 @@ card.style.transform="translateX(400px) rotate(20deg)";
 
 setTimeout(()=>{
 document.getElementById("matchScreen").classList.add("show");
+floatingHearts();
 },400);
 
 setTimeout(()=>{
@@ -197,6 +259,30 @@ card.style.transform="translateX(0)";
 document.getElementById("nopeText").style.opacity=0;
 },600);
 }
+
+/* Floating hearts */
+function floatingHearts(){
+for(let i=0;i<20;i++){
+let h=document.createElement("div");
+h.innerHTML="💖";
+h.style.position="absolute";
+h.style.left=Math.random()*100+"vw";
+h.style.bottom="0";
+h.style.fontSize="20px";
+h.style.animation="floatUp 3s linear forwards";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),3000);
+}
+}
+
+let style=document.createElement("style");
+style.innerHTML=`
+@keyframes floatUp{
+from{transform:translateY(0);}
+to{transform:translateY(-100vh);opacity:0;}
+}
+`;
+document.head.appendChild(style);
 </script>
 
 </body>
