@@ -1,128 +1,201 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
-<title>Happy Valentine’s Day ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<title>Swipe Me 😏</title>
 
 <style>
-body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #ffccd5, #fff0f5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    text-align: center;
-    overflow: hidden;
-    color: #b30059;
+body{
+margin:0;
+font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,#ff4d88,#ff99aa);
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+overflow:hidden;
 }
 
-.card {
-    background: white;
-    padding: 40px;
-    border-radius: 25px;
-    box-shadow: 0 15px 40px rgba(255, 77, 136, 0.25);
-    max-width: 520px;
-    position: relative;
-    z-index: 2;
+.card{
+width:90%;
+max-width:350px;
+height:520px;
+background:white;
+border-radius:20px;
+box-shadow:0 15px 40px rgba(0,0,0,0.3);
+position:relative;
+overflow:hidden;
+transition:transform 0.3s ease;
 }
 
-h1 {
-    font-family: 'Great Vibes', cursive;
-    font-size: 48px;
-    margin-bottom: 10px;
+.card img{
+width:100%;
+height:75%;
+object-fit:cover;
+transition:opacity 0.3s ease;
 }
 
-.heartbeat {
-    animation: heartbeat 1.5s infinite;
+.info{
+padding:15px;
 }
 
-@keyframes heartbeat {
-    0%, 100% { transform: scale(1); }
-    25% { transform: scale(1.1); }
-    50% { transform: scale(1); }
-    75% { transform: scale(1.1); }
+h2{
+margin:5px 0;
 }
 
-button {
-    margin-top: 20px;
-    padding: 12px 28px;
-    border-radius: 30px;
-    border: none;
-    background: #ff4d88;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.3s;
+.tag{
+font-size:13px;
+color:#555;
+margin-top:5px;
 }
 
-button:hover {
-    transform: scale(1.05);
+.overlay{
+position:absolute;
+top:20px;
+left:20px;
+font-size:30px;
+font-weight:bold;
+opacity:0;
+transition:0.3s;
 }
 
-#message {
-    margin-top: 20px;
-    font-weight: 500;
+.like{ color:#2ecc71; }
+.nope{ color:#e74c3c; }
+
+.buttons{
+position:absolute;
+bottom:15px;
+width:100%;
+text-align:center;
 }
 
-.heart {
-    position: fixed;
-    font-size: 22px;
-    animation: floatUp 3s linear forwards;
+.buttons button{
+margin:10px;
+padding:10px 20px;
+border:none;
+border-radius:50px;
+font-size:16px;
+cursor:pointer;
 }
 
-@keyframes floatUp {
-    from { transform: translateY(100vh); opacity: 1; }
-    to { transform: translateY(-10vh); opacity: 0; }
+.no-btn{
+background:#ff7675;
+color:white;
+}
+
+.yes-btn{
+background:#2ecc71;
+color:white;
+}
+
+.match-screen{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(255,0,100,0.9);
+color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+font-size:40px;
+opacity:0;
+pointer-events:none;
+transition:opacity 0.5s ease;
+z-index:999;
+}
+
+.match-screen.show{
+opacity:1;
+pointer-events:auto;
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
-    <h1 class="heartbeat">Happy Valentine’s Day, Karishma ❤️</h1>
+<div class="card" id="card">
+<img id="profilePic" src="profile1.jpg">
 
-    <p>
-        Today isn’t just a date on the calendar…
-        it’s a reminder that I’m lucky to have you in my life.
-    </p>
+<div class="overlay like" id="likeText">LIKE ❤️</div>
+<div class="overlay nope" id="nopeText">NOPE 💔</div>
 
-    <button onclick="startMagic()">Hold My Hand 🤝</button>
-
-    <div id="message"></div>
+<div class="info">
+<h2>Vikas, 22</h2>
+<div class="tag">
+✔ Professional overthinker<br>
+✔ Makes bad jokes but great memories<br>
+✔ Loyal AF<br>
+Looking for: Karishma only 💖
+</div>
 </div>
 
-<audio id="bgMusic" loop>
-    <source src="music.mp3" type="audio/mpeg">
-</audio>
+<div class="buttons">
+<button class="no-btn" onclick="swipeLeft()">Nope</button>
+<button class="yes-btn" onclick="swipeRight()">Like</button>
+</div>
+
+</div>
+
+<div class="match-screen" id="matchScreen">
+IT'S A MATCH! 💘<br>
+<span style="font-size:18px; margin-top:15px;">
+You and Vikas liked each other 😉
+</span>
+</div>
 
 <script>
-function startMagic() {
-    document.getElementById("bgMusic").play();
+let card=document.getElementById("card");
+let startX=0;
 
-    document.getElementById("message").innerHTML =
-        "With you, even ordinary days feel magical. ❤️<br><br>Thank you for being my today and my forever.";
+let photos=["profile1.jpg","profile2.jpg","profile3.jpg"];
+let photoIndex=0;
+let img=document.getElementById("profilePic");
 
-    burstHearts();
+function nextPhoto(){
+photoIndex=(photoIndex+1)%photos.length;
+img.style.opacity=0;
+setTimeout(()=>{
+img.src=photos[photoIndex];
+img.style.opacity=1;
+},200);
 }
 
-function burstHearts() {
-    for (let i = 0; i < 25; i++) {
-        let heart = document.createElement("div");
-        heart.className = "heart";
-        heart.innerHTML = "💖";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.animationDuration = (Math.random() * 2 + 2) + "s";
-        document.body.appendChild(heart);
+img.addEventListener("click",nextPhoto);
 
-        setTimeout(() => heart.remove(), 3000);
-    }
+card.addEventListener("touchstart",function(e){
+startX=e.touches[0].clientX;
+});
+
+card.addEventListener("touchend",function(e){
+let endX=e.changedTouches[0].clientX;
+if(startX-endX>50){ swipeLeft(); }
+else if(endX-startX>50){ swipeRight(); }
+});
+
+function swipeRight(){
+document.getElementById("likeText").style.opacity=1;
+card.style.transform="translateX(400px) rotate(20deg)";
+
+setTimeout(()=>{
+document.getElementById("matchScreen").classList.add("show");
+},400);
+
+setTimeout(()=>{
+location.href="love.html";
+},2000);
+}
+
+function swipeLeft(){
+document.getElementById("nopeText").style.opacity=1;
+card.style.transform="translateX(-400px) rotate(-20deg)";
+setTimeout(()=>{
+card.style.transform="translateX(0)";
+document.getElementById("nopeText").style.opacity=0;
+},600);
 }
 </script>
 
