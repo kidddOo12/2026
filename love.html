@@ -2,8 +2,8 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-<title>How Much?</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<title>Photo Booth 📸</title>
 
 <style>
 body{
@@ -11,25 +11,64 @@ margin:0;
 font-family:'Poppins',sans-serif;
 background:linear-gradient(135deg,#ffd6e8,#fff5f9);
 display:flex;
-justify-content:center;
+flex-direction:column;
 align-items:center;
+justify-content:center;
 height:100vh;
-text-align:center;
+overflow:hidden;
 color:#b30059;
 opacity:0;
 transition:opacity 0.6s ease-in-out;
 }
+
 body.fade-in{opacity:1;}
 
-.card{
-background:white;
-padding:35px;
-border-radius:25px;
-box-shadow:0 10px 30px rgba(255,77,136,0.3);
-max-width:500px;
+h1{
+font-family:'Great Vibes',cursive;
+font-size:40px;
+margin-bottom:10px;
 }
 
-input{width:100%;}
+.booth{
+width:90%;
+max-width:380px;
+height:400px;
+background:white;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(255,77,136,0.3);
+display:flex;
+justify-content:center;
+align-items:center;
+position:relative;
+overflow:hidden;
+}
+
+.polaroid{
+position:absolute;
+width:70%;
+background:white;
+padding:10px;
+border-radius:10px;
+box-shadow:0 8px 20px rgba(0,0,0,0.2);
+transform:rotate(calc(-5deg + 10deg * var(--r)));
+animation:pop 0.4s ease;
+}
+
+.polaroid img{
+width:100%;
+border-radius:8px;
+}
+
+.caption{
+text-align:center;
+font-size:12px;
+margin-top:5px;
+}
+
+@keyframes pop{
+from{transform:scale(0);}
+to{transform:scale(1);}
+}
 
 button{
 margin-top:20px;
@@ -38,32 +77,71 @@ border:none;
 border-radius:25px;
 background:#ff4d88;
 color:white;
+font-size:14px;
 cursor:pointer;
+}
+
+.flash{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:white;
+opacity:0;
+pointer-events:none;
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
-<h2>How much do you love me? 😌</h2>
-<input type="range" min="0" max="100" value="50" id="slider">
-<p id="value">50%</p>
-<button onclick="location.href='moment.html'">Continue ❤️</button>
+<h1>Our Love Booth 📸</h1>
+
+<div class="booth" id="booth">
+Tap below to capture our moments 💖
 </div>
+
+<button onclick="takePhoto()">Capture Memory 📷</button>
+<button onclick="location.href='moment.html'">Continue ❤️</button>
+
+<div class="flash" id="flash"></div>
 
 <script>
 document.addEventListener("DOMContentLoaded",function(){
 document.body.classList.add("fade-in");
 });
 
-let slider=document.getElementById("slider");
-let value=document.getElementById("value");
-slider.oninput=function(){
-value.innerHTML=this.value+"%";
-if(this.value==100){
-value.innerHTML="Infinity ♾️💖";
-}
+let photos=[
+{src:"booth1.jpg",text:"The smile that started everything ❤️"},
+{src:"booth2.jpg",text:"My favorite human 😌"},
+{src:"booth3.jpg",text:"Moments I never want to lose 💞"},
+{src:"booth4.jpg",text:"Forever looks good on us 💖"}
+];
+
+let index=0;
+
+function takePhoto(){
+if(index>=photos.length)return;
+
+let booth=document.getElementById("booth");
+let flash=document.getElementById("flash");
+
+flash.style.opacity=1;
+setTimeout(()=>flash.style.opacity=0,200);
+
+let polaroid=document.createElement("div");
+polaroid.className="polaroid";
+polaroid.style.setProperty("--r",Math.random());
+
+polaroid.innerHTML=`
+<img src="${photos[index].src}">
+<div class="caption">${photos[index].text}</div>
+`;
+
+booth.appendChild(polaroid);
+
+index++;
 }
 </script>
 
