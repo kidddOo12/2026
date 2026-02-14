@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<title>My Question ❤️</title>
+
+<style>
+body{
+margin:0;
+font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,#ffccd5,#ffe6f0);
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+text-align:center;
+color:#b30059;
+overflow:hidden;
+opacity:0;
+transition:opacity 0.6s ease-in-out;
+}
+body.fade-in{opacity:1;}
+
+h1{
+font-family:'Great Vibes',cursive;
+font-size:44px;
+}
+
+button{
+margin-top:20px;
+padding:12px 28px;
+border:none;
+border-radius:30px;
+background:#ff4d88;
+color:white;
+cursor:pointer;
+}
+
+.heart{
+position:fixed;
+font-size:22px;
+animation:float 3s linear forwards;
+}
+
+@keyframes float{
+from{transform:translateY(100vh);}
+to{transform:translateY(-10vh);opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<div>
+<h1>Will you always be mine? 💖</h1>
+<button onclick="explode()">YES ❤️</button>
+</div>
+
+<audio id="music" loop>
+<source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+document.body.classList.add("fade-in");
+});
+
+function explode(){
+document.getElementById("music").play();
+for(let i=0;i<30;i++){
+let h=document.createElement("div");
+h.className="heart";
+h.innerHTML="💖";
+h.style.left=Math.random()*100+"vw";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),3000);
+}
+setTimeout(()=>location.href="forever.html",1500);
+}
+</script>
+
+</body>
+</html>
