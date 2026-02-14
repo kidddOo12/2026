@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<title>Forever ❤️</title>
+
+<style>
+body{
+margin:0;
+font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,#fff0f5,#ffe6f0);
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+text-align:center;
+color:#b30059;
+overflow:hidden;
+opacity:0;
+transition:opacity 0.6s ease-in-out;
+}
+body.fade-in{opacity:1;}
+
+.card{
+background:white;
+padding:35px;
+border-radius:25px;
+box-shadow:0 10px 30px rgba(255,77,136,0.3);
+max-width:500px;
+}
+
+h1{
+font-family:'Great Vibes',cursive;
+font-size:44px;
+}
+
+.petal{
+position:fixed;
+top:-10px;
+font-size:20px;
+animation:fall linear forwards;
+}
+
+@keyframes fall{
+to{transform:translateY(110vh);opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+<h1>Karishma ❤️</h1>
+<p>
+I didn’t just fall in love with you…<br>
+I built a home in you.<br><br>
+Always yours,<br>
+<strong onclick="location.href='ring.html'" style="cursor:pointer;">VIKAS 💖</strong>
+</p>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+document.body.classList.add("fade-in");
+});
+
+function petal(){
+let p=document.createElement("div");
+p.className="petal";
+p.innerHTML="🌸";
+p.style.left=Math.random()*100+"vw";
+p.style.animationDuration=(Math.random()*5+5)+"s";
+document.body.appendChild(p);
+setTimeout(()=>p.remove(),10000);
+}
+setInterval(petal,600);
+</script>
+
+</body>
+</html>
