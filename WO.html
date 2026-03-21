@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>5-Day Gym PPL+ Plan | Build. Burn. Recompose.</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+/* ── Reset & Base ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080808;
+  --card:#101010;
+  --card2:#0d0d0d;
+  --border:#1c1c1c;
+  --white:#f0ede8;
+  --dim:#777;
+  --vdim:#333;
+  --mon:#27AE60;
+  --tue:#FF5733;
+  --wed:#3498DB;
+  --thu:#E67E22;
+  --fri:#9B59B6;
+  --compound:#F1C40F;
+  --traps:#E74C3C;
+  --isolation:#3498DB;
+  --core:#9B59B6;
+  --hiit:#FF5733;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--white);
+  font-family:'DM Sans',sans-serif;
+  font-size:15px;
+  line-height:1.6;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+/* Grain overlay */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:.4;
+}
+
+/* ── Nav ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 24px;
+  background:rgba(8,8,8,.85);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:22px;letter-spacing:2px;
+  color:var(--white);
+}
+.nav-logo span{color:#E74C3C}
+.nav-days{display:flex;gap:6px}
+.nav-day-btn{
+  background:none;border:1px solid var(--border);
+  border-radius:6px;padding:5px 10px;
+  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
+  color:var(--dim);cursor:pointer;transition:all .2s;letter-spacing:1px;
+}
+.nav-day-btn:hover,.nav-day-btn.active{
+  color:var(--white);border-color:currentColor;
+}
+.nav-day-btn[data-day="MON"]:hover,.nav-day-btn[data-day="MON"].active{color:var(--mon)}
+.nav-day-btn[data-day="TUE"]:hover,.nav-day-btn[data-day="TUE"].active{color:var(--tue)}
+.nav-day-btn[data-day="WED"]:hover,.nav-day-btn[data-day="WED"].active{color:var(--wed)}
+.nav-day-btn[data-day="THU"]:hover,.nav-day-btn[data-day="THU"].active{color:var(--thu)}
+.nav-day-btn[data-day="FRI"]:hover,.nav-day-btn[data-day="FRI"].active{color:var(--fri)}
+.hamburger{display:none;background:none;border:none;color:var(--white);cursor:pointer;font-size:22px}
+
+/* ── Hero ── */
+.hero{
+  position:relative;min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:100px 24px 60px;
+  overflow:hidden;
+}
+.hero-bg-lines{
+  position:absolute;inset:0;
+  background:repeating-linear-gradient(
+    90deg,transparent,transparent 80px,rgba(255,255,255,.015) 80px,rgba(255,255,255,.015) 81px
+  );
+  pointer-events:none;
+}
+.hero-kicker{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;letter-spacing:4px;color:var(--dim);
+  text-transform:uppercase;margin-bottom:20px;
+  animation:fadeUp .8s ease both;
+}
+.hero-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(56px,12vw,130px);
+  line-height:.9;letter-spacing:2px;
+  color:var(--white);
+  animation:fadeUp .8s .1s ease both;
+}
+.hero-title .accent{color:#E74C3C}
+.hero-sub{
+  margin-top:20px;font-size:15px;color:var(--dim);
+  max-width:480px;
+  animation:fadeUp .8s .2s ease both;
+}
+.hero-tags{
+  display:flex;flex-wrap:wrap;gap:8px;justify-content:center;
+  margin-top:28px;
+  animation:fadeUp .8s .3s ease both;
+}
+.tag{
+  border:1px solid;border-radius:20px;
+  padding:5px 14px;font-size:11px;letter-spacing:2px;
+  font-family:'JetBrains Mono',monospace;font-weight:700;
+}
+.tag-compound{color:var(--compound);border-color:var(--compound)}
+.tag-traps   {color:var(--traps);   border-color:var(--traps)}
+.tag-freq    {color:var(--mon);     border-color:var(--mon)}
+.tag-hiit    {color:var(--hiit);    border-color:var(--hiit)}
+
+.hero-cta{
+  margin-top:40px;
+  animation:fadeUp .8s .4s ease both;
+}
+.btn-primary{
+  display:inline-block;
+  background:var(--white);color:#080808;
+  font-family:'DM Sans',sans-serif;font-weight:700;font-size:14px;
+  padding:14px 32px;border-radius:8px;
+  cursor:pointer;border:none;letter-spacing:.5px;
+  transition:transform .15s,box-shadow .15s;
+  text-decoration:none;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(255,255,255,.1)}
+
+.scroll-arrow{
+  position:absolute;bottom:30px;left:50%;transform:translateX(-50%);
+  color:var(--vdim);font-size:22px;
+  animation:bounce 2s infinite;
+}
+
+/* ── Section Shell ── */
+.section{padding:80px 24px;max-width:900px;margin:0 auto;position:relative;z-index:1}
+.section-label{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:4px;color:var(--dim);text-transform:uppercase;
+  margin-bottom:16px;
+}
+
+/* ── Split Overview ── */
+.split-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:10px;
+  margin-top:20px;
+}
+.split-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:18px 14px;
+  cursor:pointer;transition:all .2s;
+  text-align:center;position:relative;overflow:hidden;
+}
+.split-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--accent-color);
+}
+.split-card:hover{transform:translateY(-3px);border-color:var(--accent-color)}
+.split-card .s-day{
+  font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:2px;
+  color:var(--accent-color);
+}
+.split-card .s-tag{
+  font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;
+  border:1px solid;border-radius:8px;padding:2px 7px;
+  display:inline-block;margin:6px 0;
+  color:var(--accent-color);border-color:var(--accent-color);
+}
+.split-card .s-theme{font-size:11px;color:var(--dim);line-height:1.4}
+.split-card .s-time{font-size:10px;color:var(--vdim);margin-top:4px;font-family:'JetBrains Mono',monospace}
+
+/* ── Muscle Map ── */
+.muscle-map{margin-top:20px;display:flex;flex-direction:column;gap:6px}
+.muscle-row{
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:8px;padding:10px 16px;
+}
+.muscle-name{font-size:13px;font-weight:600;min-width:110px}
+.muscle-days{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.muscle-badge{
+  font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;
+  border:1px solid;border-radius:4px;padding:2px 7px;
+}
+
+/* ── Why Efficient ── */
+.why-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:20px}
+.why-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:20px;transition:border-color .2s;
+}
+.why-card:hover{border-color:var(--compound)}
+.why-icon{font-size:24px;margin-bottom:8px}
+.why-title{font-size:13px;font-weight:700;color:var(--compound);margin-bottom:4px}
+.why-body{font-size:12px;color:var(--dim);line-height:1.6}
+
+/* ── Day Detail View ── */
+#day-view{display:none;position:relative;z-index:1}
+.day-hero{
+  padding:120px 24px 50px;
+  position:relative;overflow:hidden;
+  border-bottom:1px solid var(--border);
+}
+.day-hero-bg{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 80% at 80% 50%,var(--day-color-alpha),transparent);
+  pointer-events:none;
+}
+.day-hero-inner{max-width:900px;margin:0 auto;position:relative}
+.day-back{
+  display:inline-flex;align-items:center;gap:6px;
+  background:none;border:1px solid var(--border);border-radius:6px;
+  padding:6px 14px;color:var(--dim);cursor:pointer;font-size:12px;
+  font-family:'DM Sans',sans-serif;margin-bottom:20px;transition:all .2s;
+}
+.day-back:hover{color:var(--white);border-color:var(--dim)}
+.day-label-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.day-label{
+  font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;
+  letter-spacing:3px;
+}
+.day-dot{width:6px;height:6px;border-radius:50%;background:var(--dim)}
+.day-time-label{font-size:11px;color:var(--dim);font-family:'JetBrains Mono',monospace}
+.day-theme{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(42px,7vw,80px);
+  line-height:.95;letter-spacing:2px;
+  margin-bottom:8px;
+}
+.day-subtitle{font-size:14px;color:var(--dim);margin-bottom:16px}
+.freq-chips{display:flex;flex-wrap:wrap;gap:6px}
+.freq-chip{
+  font-size:10px;font-family:'JetBrains Mono',monospace;
+  background:rgba(255,255,255,.04);border:1px solid;
+  border-radius:6px;padding:3px 10px;
+}
+
+/* ── Day Content ── */
+.day-content{max-width:900px;margin:0 auto;padding:40px 24px 80px}
+
+/* Warmup */
+.warmup-card{
+  background:var(--card2);border:1px solid var(--border);
+  border-radius:12px;padding:20px;margin-bottom:28px;
+}
+.block-label{
+  font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;
+  color:var(--dim);text-transform:uppercase;margin-bottom:12px;
+}
+.warmup-items{display:flex;flex-direction:column;gap:6px}
+.warmup-item{font-size:13px;color:#bbb;padding:5px 0;border-bottom:1px solid var(--border)}
+.warmup-item:last-child{border-bottom:none}
+
+/* Exercise Block */
+.ex-block{margin-bottom:14px;border-radius:12px;overflow:hidden;border:1px solid var(--border)}
+.ex-block-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 18px;background:var(--card);cursor:pointer;
+  transition:background .15s;user-select:none;
+}
+.ex-block-header:hover{background:var(--card2)}
+.ex-block-header-left{display:flex;align-items:center;gap:10px}
+.ex-block-tag{
+  font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:1.5px;
+  border:1px solid;border-radius:5px;padding:2px 8px;flex-shrink:0;
+}
+.ex-block-title{font-size:13px;font-weight:600;color:var(--white)}
+.ex-block-chevron{font-size:20px;transition:transform .2s;color:var(--dim)}
+.ex-block-chevron.open{transform:rotate(45deg)}
+
+/* Exercise Table */
+.ex-table{width:100%;border-collapse:collapse}
+.ex-table-head th{
+  font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:2px;
+  color:var(--vdim);text-transform:uppercase;
+  padding:8px 18px;background:#0c0c0c;text-align:left;
+  border-bottom:1px solid var(--border);
+}
+.ex-table-head th:not(:first-child){text-align:center}
+.ex-row{border-top:1px solid #141414;transition:background .15s}
+.ex-row:hover{background:rgba(255,255,255,.02)}
+.ex-row td{padding:14px 18px;vertical-align:top}
+.ex-name{font-size:13px;font-weight:700;color:var(--white);display:block;margin-bottom:4px}
+.ex-tip{font-size:11px;color:#555;font-style:italic;line-height:1.5}
+.ex-sets{font-family:'Bebas Neue',sans-serif;font-size:22px;text-align:center}
+.ex-reps{font-family:'JetBrains Mono',monospace;font-size:11px;color:#aaa;text-align:center}
+.ex-rest{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dim);text-align:center}
+
+/* Cooldown */
+.cooldown-bar{
+  background:var(--card2);border:1px solid var(--border);
+  border-radius:10px;padding:14px 18px;margin-top:16px;
+}
+.cooldown-text{font-size:13px;color:var(--dim);font-style:italic}
+
+/* Day nav */
+.day-nav{display:flex;gap:10px;margin-top:32px}
+.day-nav-btn{
+  flex:1;padding:14px;background:var(--card);border:1px solid var(--border);
+  border-radius:10px;font-family:'DM Sans',sans-serif;font-size:13px;
+  color:var(--dim);cursor:pointer;transition:all .2s;
+}
+.day-nav-btn:hover{color:var(--white);border-color:var(--dim)}
+.day-nav-btn.next{text-align:right}
+
+/* ── Rules Section ── */
+.rules-list{display:flex;flex-direction:column;gap:8px;margin-top:16px}
+.rule-item{
+  display:flex;align-items:flex-start;gap:12px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:10px;padding:14px 16px;
+  font-size:13px;color:var(--dim);line-height:1.6;
+}
+.rule-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+
+/* ── Footer ── */
+footer{
+  text-align:center;padding:30px 24px;
+  border-top:1px solid var(--border);
+  font-size:12px;color:var(--vdim);
+}
+
+/* ── Animations ── */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes bounce{
+  0%,100%{transform:translateX(-50%) translateY(0)}
+  50%{transform:translateX(-50%) translateY(-8px)}
+}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s}
+.reveal.visible{opacity:1;transform:none}
+
+/* ── Mobile ── */
+@media(max-width:700px){
+  .nav-days{display:none}.hamburger{display:block}
+  .nav-days.open{
+    display:flex;flex-direction:column;
+    position:fixed;top:57px;left:0;right:0;
+    background:rgba(8,8,8,.97);padding:16px;gap:8px;
+    border-bottom:1px solid var(--border);z-index:99;
+  }
+  .nav-day-btn{width:100%;text-align:center;padding:10px}
+  .split-grid{grid-template-columns:repeat(2,1fr)}
+  .split-grid .split-card:last-child{grid-column:span 2}
+  .why-grid{grid-template-columns:1fr}
+  .ex-table-head th:nth-child(4),.ex-row td:nth-child(4){display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">PPL<span>+</span></div>
+  <div class="nav-days" id="navDays">
+    <button class="nav-day-btn" data-day="MON" onclick="showDay(0)">MON</button>
+    <button class="nav-day-btn" data-day="TUE" onclick="showDay(1)">TUE</button>
+    <button class="nav-day-btn" data-day="WED" onclick="showDay(2)">WED</button>
+    <button class="nav-day-btn" data-day="THU" onclick="showDay(3)">THU</button>
+    <button class="nav-day-btn" data-day="FRI" onclick="showDay(4)">FRI</button>
+  </div>
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+</nav>
+
+<!-- HOME VIEW -->
+<div id="homeView">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg-lines"></div>
+    <div class="hero-kicker">5-Day Full Gym · Push · Pull · Legs</div>
+    <h1 class="hero-title">Build.<br/>Burn.<br/><span class="accent">Recompose.</span></h1>
+    <p class="hero-sub">Maximum efficiency. Every muscle twice a week. Daily trap training. Compounds every session.</p>
+    <div class="hero-tags">
+      <span class="tag tag-compound">COMPOUNDS</span>
+      <span class="tag tag-traps">TRAPS 5×/WEEK</span>
+      <span class="tag tag-freq">2× FREQUENCY</span>
+      <span class="tag tag-hiit">HIIT + CARDIO</span>
+    </div>
+    <div class="hero-cta">
+      <button class="btn-primary" onclick="document.getElementById('split').scrollIntoView({behavior:'smooth'})">View the Plan ↓</button>
+    </div>
+    <div class="scroll-arrow">↓</div>
+  </section>
+
+  <!-- SPLIT OVERVIEW -->
+  <section class="section reveal" id="split">
+    <div class="section-label">Weekly Split</div>
+    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:2px;margin-bottom:6px">5 Days. Zero Wasted Sessions.</h2>
+    <p style="color:var(--dim);font-size:13px;margin-bottom:4px">Click any day to open the full workout.</p>
+    <div class="split-grid" id="splitGrid"></div>
+  </section>
+
+  <!-- MUSCLE MAP -->
+  <section class="section reveal">
+    <div class="section-label">Muscle Frequency Map</div>
+    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:2px;margin-bottom:16px">Every Muscle. Twice a Week.</h2>
+    <div class="muscle-map" id="muscleMap"></div>
+  </section>
+
+  <!-- WHY EFFICIENT -->
+  <section class="section reveal">
+    <div class="section-label">Why This Plan</div>
+    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:2px;margin-bottom:6px">Maximally Efficient.</h2>
+    <p style="color:var(--dim);font-size:13px;margin-bottom:4px">Not just good. Built on what the science actually says.</p>
+    <div class="why-grid" id="whyGrid"></div>
+  </section>
+
+  <!-- RULES -->
+  <section class="section reveal">
+    <div class="section-label">Non-Negotiable Rules</div>
+    <h2 style="font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:2px;margin-bottom:4px">Follow These. Always.</h2>
+    <div class="rules-list" id="rulesList"></div>
+  </section>
+
+  <footer>Built for <strong style="color:var(--white)">Vikas</strong> · PPL+ Gym Plan · 2026</footer>
+</div>
+
+<!-- DAY VIEW -->
+<div id="day-view">
+  <div class="day-hero" id="dayHero">
+    <div class="day-hero-bg" id="dayHeroBg"></div>
+    <div class="day-hero-inner">
+      <button class="day-back" onclick="showHome()">← Back to Plan</button>
+      <div class="day-label-row">
+        <span class="day-label" id="dayLabelText"></span>
+        <div class="day-dot"></div>
+        <span class="day-time-label" id="dayTimeText"></span>
+        <div class="day-dot"></div>
+        <span class="day-time-label" id="dayDurationText"></span>
+      </div>
+      <div class="day-theme" id="dayThemeText"></div>
+      <div class="day-subtitle" id="daySubtitleText"></div>
+      <div class="freq-chips" id="dayFreqChips"></div>
+    </div>
+  </div>
+  <div class="day-content">
+    <div class="warmup-card">
+      <div class="block-label">🔆 Warm-Up</div>
+      <div class="warmup-items" id="warmupItems"></div>
+    </div>
+    <div id="exerciseBlocks"></div>
+    <div class="cooldown-bar">
+      <div class="block-label">🌬️ Cool-Down · 5 min</div>
+      <div class="cooldown-text" id="cooldownText"></div>
+    </div>
+    <div class="day-nav" id="dayNav"></div>
+  </div>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────
+const DAYS = [
+  {
+    label:"MON", day:"Monday", time:"Evening", tag:"LEGS", duration:"65–75 min",
+    color:"#27AE60",
+    frequency:["Quads ①","Glutes ①","Hams ①","Traps ①"],
+    theme:"Legs — Quad Focus",
+    subtitle:"Barbell Squat · Leg Press · RDL · Calves",
+    warmup:[
+      "5 min – Treadmill brisk walk or light cycle",
+      "2 sets – Goblet Squat with light DB (10 reps, slow)",
+      "1 min – Hip circles + leg swings",
+      "1 set – Leg Press at 40% working weight (15 reps)"
+    ],
+    blocks:[
+      { title:"A. Compound — Squat Pattern", tag:"COMPOUND",
+        exercises:[
+          ["Barbell Back Squat","4","8–10","90s","King of all exercises. Bar on upper traps. Chest up, break at hips and knees together. ATG depth if mobility allows. #1 quad + glute builder."],
+          ["Leg Press (Machine)","3","12–15","75s","Feet shoulder-width, mid-platform. Full range — don't lock knees at top. Safer volume after squats."],
+          ["Hack Squat (Machine)","3","12","75s","More quad isolation than regular squat. Go deep. Squeeze the quad at the top."],
+        ]
+      },
+      { title:"B. Compound — Hinge Pattern", tag:"COMPOUND",
+        exercises:[
+          ["Romanian Deadlift (Barbell)","4","10–12","75s","Hinge at hips, soft knee. Bar stays close to legs. Feel the hamstring stretch at the bottom."],
+          ["Walking Lunges (DBs)","3","12 each leg","60s","Hold DBs at sides. Long stride, front knee tracks over ankle. Glutes + quads together."],
+        ]
+      },
+      { title:"C. Trap Builder ①", tag:"TRAPS",
+        exercises:[
+          ["DB Shrugs","4","15–20","45s","Go HEAVY. Shrug UP and slightly BACK — not forward. Hold 1s at top. Traps = heavy load + high reps."],
+          ["Farmer Carry (Heavy DBs)","3","40s walk","60s","Heaviest DBs in the gym. Traps fire isometrically the entire carry. Also trains grip."],
+        ]
+      },
+      { title:"D. Isolation — Calves", tag:"ISOLATION",
+        exercises:[
+          ["Standing Calf Raise (Machine)","4","20–25","45s","Full range — heel drops below platform. 2s up, 2s pause, 2s down."],
+          ["Seated Calf Raise (Machine)","3","20","45s","Hits soleus (deeper calf). Complete calf development requires both machines."],
+        ]
+      },
+      { title:"E. Leg Extension + Curl", tag:"ISOLATION",
+        exercises:[
+          ["Leg Extension (Machine)","3","15","45s","Pure quad isolation. Squeeze at full extension — 1s hold. No momentum."],
+          ["Lying Leg Curl (Machine)","3","12–15","45s","Hamstring isolation. Curl to full flexion. Slow eccentric (3s down)."],
+        ]
+      },
+    ],
+    cooldown:"Quad stretch · Pigeon pose · Seated hamstring stretch · Standing calf stretch"
+  },
+  {
+    label:"TUE", day:"Tuesday", time:"Evening", tag:"PUSH", duration:"65–75 min",
+    color:"#FF5733",
+    frequency:["Chest ①","Shoulders ①","Triceps ①","Traps ②"],
+    theme:"Push Day",
+    subtitle:"Bench Press · OHP · Incline DB · Triceps",
+    warmup:[
+      "5 min – Treadmill or light rowing machine",
+      "2 sets – Empty bar bench press (15 reps, slow)",
+      "1 set – Light DB lateral raises (15 reps)",
+      "1 min – Arm circles + shoulder rolls"
+    ],
+    blocks:[
+      { title:"A. Compound — Chest Press", tag:"COMPOUND",
+        exercises:[
+          ["Barbell Flat Bench Press","4","6–10","90s","The most important push compound. Grip slightly wider than shoulder. Bar touches lower chest. Drive feet into floor."],
+          ["Incline DB Press","4","10–12","75s","30–45° incline. DBs give better range of motion. Touch DBs at bottom for maximum chest stretch."],
+          ["Decline Barbell Press","3","10–12","75s","Hits lower chest. Complete chest development needs all three angles."],
+        ]
+      },
+      { title:"B. Compound — Shoulder Press", tag:"COMPOUND",
+        exercises:[
+          ["Seated DB Overhead Press","4","10–12","75s","Best shoulder compound. DBs allow natural wrist rotation. Press from ear level overhead."],
+          ["Arnold Press","3","12","60s","Rotate from palms facing you to facing out as you press. Hits all 3 delt heads in one movement."],
+        ]
+      },
+      { title:"C. Trap Builder ②", tag:"TRAPS",
+        exercises:[
+          ["Barbell Upright Row","4","12–15","45s","Pull bar to chin. Elbows lead UP and OUT. Best upper trap + rear delt compound."],
+          ["DB Shrugs","3","20","45s","Heavier than Monday if possible. Shrug UP and BACK. Hold 1s at top."],
+        ]
+      },
+      { title:"D. Chest Isolation", tag:"ISOLATION",
+        exercises:[
+          ["Cable Flyes (Low to High)","3","15","45s","Cables maintain tension throughout. Lower + inner chest. Squeeze hard at the top."],
+          ["Pec Deck (Machine Flye)","3","15","45s","Pure chest isolation. Full stretch at start, hard squeeze at contraction."],
+        ]
+      },
+      { title:"E. Tricep Isolation", tag:"ISOLATION",
+        exercises:[
+          ["Cable Tricep Pushdown (Rope)","4","15","45s","Split rope at bottom. Constant cable tension. Elbows glued to sides."],
+          ["Skull Crushers (EZ Bar)","3","12","60s","Lower bar to forehead, press back. Best long-head tricep exercise."],
+          ["Overhead Tricep Extension (Cable)","3","15","45s","Face away from cable. Long head under max stretch — most of tricep mass lives here."],
+        ]
+      },
+      { title:"F. Lateral Delt Isolation", tag:"ISOLATION",
+        exercises:[
+          ["DB Lateral Raises","4","15–20","30s","Shoulder width is built here. Slight forward lean. 3s controlled descent."],
+          ["Cable Lateral Raise","3","15","30s","Cable keeps tension at the bottom. One arm at a time for better mind-muscle."],
+        ]
+      },
+    ],
+    cooldown:"Chest doorway stretch · Overhead tricep stretch · Cross-body shoulder stretch"
+  },
+  {
+    label:"WED", day:"Wednesday", time:"Evening", tag:"PULL", duration:"70–80 min",
+    color:"#3498DB",
+    frequency:["Back ①","Biceps ①","Rear Delts ①","Traps ③"],
+    theme:"Pull Day",
+    subtitle:"Deadlift · Barbell Row · Lat Pulldown · Biceps",
+    warmup:[
+      "5 min – Treadmill or rowing machine",
+      "2 sets – Light lat pulldown (15 reps)",
+      "1 min – Cat-Cow + thoracic rotations",
+      "1 set – Deadlift at 50% working weight (8 reps)"
+    ],
+    blocks:[
+      { title:"A. Compound — The Big Three Pull", tag:"COMPOUND",
+        exercises:[
+          ["Conventional Deadlift (Barbell)","4","5–8","2 min","Most powerful compound lift. Hinge at hips, bar over mid-foot. Drive the floor away. Entire posterior chain fires."],
+          ["Barbell Bent-Over Row","4","8–10","90s","Hinge to 45°. Pull bar to lower chest. Elbows drive back. Best back thickness builder."],
+          ["Lat Pulldown (Machine)","4","10–12","75s","Wide overhand grip. Pull to upper chest. Elbows go DOWN and BACK. Builds lat width."],
+        ]
+      },
+      { title:"B. Trap Builder ③ — Heaviest Day", tag:"TRAPS",
+        exercises:[
+          ["Barbell Shrugs","5","15–20","60s","Wednesday is your HEAVIEST trap day. Load the bar heavy. Shrug UP and BACK. 1s hold at top."],
+          ["Rack Pulls (Barbell)","3","8–10","90s","Bar at knee height in rack. Pull like a deadlift from knee up. Heavier than your deadlift possible here."],
+          ["Face Pulls (Cable)","4","15–20","45s","Rope at face height. Pull to face, elbows flare out. Best posture + shoulder health exercise. Never skip."],
+        ]
+      },
+      { title:"C. Back Isolation", tag:"ISOLATION",
+        exercises:[
+          ["Seated Cable Row","4","12–15","60s","Close grip. Pull to belly button. Full stretch forward, full squeeze back. Back thickness builder."],
+          ["Single-Arm DB Row","3","12 each","60s","Knee on bench. Full range — let DB go low, pull to hip. Go heavier than you think."],
+          ["Straight-Arm Lat Pulldown (Cable)","3","15","45s","Arms straight. Push bar from overhead to thighs. Pure lat isolation."],
+        ]
+      },
+      { title:"D. Rear Delt", tag:"ISOLATION",
+        exercises:[
+          ["Reverse Pec Deck (Machine)","4","15–20","45s","Face the machine. Arms wide. Squeeze shoulder blades. Rear delts make shoulders look 3D."],
+          ["DB Rear Delt Flye (Bent Over)","3","15","45s","Hinge to parallel. DBs below chest. Raise out to sides. Slow and controlled."],
+        ]
+      },
+      { title:"E. Bicep Isolation", tag:"ISOLATION",
+        exercises:[
+          ["Barbell Curl","4","10–12","60s","Best bicep mass builder. Full range: dead hang to full flex. Don't swing."],
+          ["Incline DB Curl","3","12","45s","On incline bench, arms hang behind body. Maximum bicep stretch. Most growth-stimulating position."],
+          ["Hammer Curl","3","12","45s","Thumbs up. Hits brachialis — pushes bicep peak up. Makes arms thick from all angles."],
+        ]
+      },
+    ],
+    cooldown:"Lat stretch on wall · Child's pose · Bicep doorway stretch · Thoracic extension on foam roller"
+  },
+  {
+    label:"THU", day:"Thursday", time:"Evening", tag:"LEGS+", duration:"70–80 min",
+    color:"#E67E22",
+    frequency:["Glutes ②","Hams ②","Quads ②","Back ②","Traps ④"],
+    theme:"Legs — Glute/Ham + HIIT",
+    subtitle:"Hip Thrust · RDL · Back Accessory · HIIT",
+    warmup:[
+      "5 min – Treadmill or bike",
+      "2 sets – Bodyweight hip thrust (15 reps, slow)",
+      "1 min – Hip circles + glute activation",
+      "1 set – Light RDL (10 reps)"
+    ],
+    blocks:[
+      { title:"A. Compound — Hip Hinge & Thrust", tag:"COMPOUND",
+        exercises:[
+          ["Barbell Hip Thrust","4","10–15","75s","Best glute compound. Bar across hips with pad. Drive hips to full extension — squeeze glutes HARD at top."],
+          ["Romanian Deadlift (Barbell)","4","10–12","75s","Second RDL hit this week. Go heavier than Monday if recovered."],
+          ["Bulgarian Split Squat (DBs)","3","10 each leg","75s","Rear foot on bench. Most brutal single-leg compound. Quad + glute together. Builds symmetry."],
+        ]
+      },
+      { title:"B. Back — Second Hit ②", tag:"COMPOUND",
+        exercises:[
+          ["Seated Cable Row","3","12–15","60s","Second back hit. Lighter than Wednesday — focus on mind-muscle and perfect form."],
+          ["Chest-Supported DB Row","3","12","60s","Lie on incline bench face down. No cheating possible — purely back doing the work."],
+        ]
+      },
+      { title:"C. Trap Builder ④", tag:"TRAPS",
+        exercises:[
+          ["DB Shrugs","4","20","45s","Fourth trap session. Still load heavy. Frequency is what builds the trap shelf."],
+          ["Cable Upright Row","3","15","45s","Cable keeps constant tension. Pull to chin. Elbows flare UP and OUT."],
+        ]
+      },
+      { title:"D. HIIT — Fat Burn Circuit (4 Rounds)", tag:"HIIT",
+        exercises:[
+          ["Treadmill Sprint","4","30s sprint / 30s walk","–","Set to 12–15 km/h for sprint. Real HIIT — belly fat burns here."],
+          ["Box Jump or Jump Squat","4","10","30s","Explosive compound cardio. Full lower body fire. Land soft."],
+          ["Battle Ropes","4","30s all-out","30s","Full upper body + cardio. If no ropes — do burpees instead."],
+        ]
+      },
+      { title:"E. Core", tag:"CORE",
+        exercises:[
+          ["Cable Crunch","3","15–20","30s","Rope attachment overhead. Only weighted ab exercise — builds actual ab thickness."],
+          ["Hanging Leg Raise","3","12–15","30s","Hang from bar. Raise legs to 90°. Lower SLOWLY. Best lower ab compound."],
+          ["Russian Twist (Plate)","3","20 total","30s","Hold weight plate. Feet off floor. Obliques = waist definition."],
+        ]
+      },
+    ],
+    cooldown:"Pigeon pose · Seated forward fold · Supine twist both sides · Hip flexor stretch"
+  },
+  {
+    label:"FRI", day:"Friday", time:"Morning", tag:"PUSH+", duration:"60–70 min",
+    color:"#9B59B6",
+    frequency:["Chest ②","Shoulders ②","Triceps ②","Biceps ②","Traps ⑤"],
+    theme:"Push + Biceps",
+    subtitle:"Incline Bench · DB Press · Biceps · Fasted Cardio",
+    warmup:[
+      "5 min – Light treadmill or bike (fasted warm-up)",
+      "2 sets – Light incline DB press (12 reps)",
+      "1 min – Shoulder rolls + band pull-aparts"
+    ],
+    blocks:[
+      { title:"A. Compound — Chest & Shoulder Press", tag:"COMPOUND",
+        exercises:[
+          ["Incline Barbell Press","4","8–10","90s","Lead compound today — upper chest is most visible. 30° incline. Second chest hit of the week. Go heavy."],
+          ["Seated DB Shoulder Press","4","10–12","75s","Second overhead press hit. Slightly lighter than Tuesday — focus on full range."],
+          ["Weighted Push-Up","3","10–15","60s","Plate on back if possible. Full range. Best chest activation as a finisher."],
+        ]
+      },
+      { title:"B. Trap Builder ⑤ — Week Finisher", tag:"TRAPS",
+        exercises:[
+          ["Barbell Shrugs","4","20","45s","End of week — as heavy as Wednesday. Traps trained 5 days straight. This volume builds the trap shelf."],
+          ["Face Pulls (Cable)","3","20","45s","Mid-trap + rear delt. Posture and shoulder health. Never skip this movement."],
+        ]
+      },
+      { title:"C. Bicep — Second Hit ②", tag:"ISOLATION",
+        exercises:[
+          ["EZ Bar Curl","4","10–12","60s","Second bicep hit. EZ bar easier on wrists. Go heavy — muscle building session."],
+          ["Cable Curl (Single Arm)","3","15 each","45s","Full stretch, full flex. Cable keeps tension at the bottom that DBs lose."],
+          ["Preacher Curl (Machine)","3","12","45s","Zero momentum possible. Full isolation. Best for bicep peak development."],
+        ]
+      },
+      { title:"D. Chest Isolation Finisher", tag:"ISOLATION",
+        exercises:[
+          ["Cable Flyes (High to Low)","3","15","45s","Upper chest focus. Different angle from Tuesday's low-to-high. Squeeze hard at contraction."],
+          ["Pec Deck","3","15","45s","Full chest pump finisher. Squeeze 1s at contraction. Go for the burn."],
+        ]
+      },
+      { title:"E. Fasted Cardio Finisher", tag:"HIIT",
+        exercises:[
+          ["Treadmill Incline Walk","1","12–15 min","–","Incline 8–12, speed 5–6 km/h. Fasted morning cardio = best fat burn. Belly + face fat burns directly."],
+        ]
+      },
+    ],
+    cooldown:"Chest doorway stretch · Bicep wall stretch · Overhead tricep stretch · Shoulder cross-body"
+  }
+];
+
+const MUSCLE_MAP = [
+  {muscle:"Chest",      days:["TUE ①","FRI ②"],                          color:"#FF5733"},
+  {muscle:"Shoulders",  days:["TUE ①","FRI ②"],                          color:"#FF8C00"},
+  {muscle:"Triceps",    days:["TUE ①","FRI ②"],                          color:"#FF5733"},
+  {muscle:"Back",       days:["WED ①","THU ②"],                          color:"#3498DB"},
+  {muscle:"Biceps",     days:["WED ①","FRI ②"],                          color:"#3498DB"},
+  {muscle:"Quads",      days:["MON ①","THU ②"],                          color:"#27AE60"},
+  {muscle:"Glutes",     days:["MON ①","THU ②"],                          color:"#27AE60"},
+  {muscle:"Hamstrings", days:["MON ①","THU ②"],                          color:"#27AE60"},
+  {muscle:"Rear Delts", days:["WED ①","FRI ②"],                          color:"#9B59B6"},
+  {muscle:"Traps 🔥",   days:["MON","TUE","WED","THU","FRI"],            color:"#E74C3C"},
+];
+
+const WHY = [
+  {icon:"🏋️", title:"Heavy Compounds", body:"Deadlift, Squat, Bench, OHP, Barbell Row — the 5 most studied mass-builders. These alone build 80% of your physique."},
+  {icon:"🔄", title:"2× Frequency", body:"Every muscle hits twice per week — the research-backed sweet spot for naturals, giving ~30–40% more growth vs once a week."},
+  {icon:"🎯", title:"Cables After Compounds", body:"Free weights build mass. Cables maintain constant tension. The combination is more effective than either alone."},
+  {icon:"🔥", title:"Traps 5×/Week", body:"Barbell Shrugs, Rack Pulls, Face Pulls, Upright Rows, Farmer Carry — the only protocol that builds the trap shelf fast."},
+  {icon:"⚡", title:"HIIT + Fasted Cardio", body:"Thursday HIIT burns max calories. Friday fasted incline walk hits fat stores without cannibalising muscle."},
+  {icon:"📈", title:"Progressive Overload Built In", body:"Add 2.5 kg to compounds every 2 weeks. Track every session. This single habit separates transformation from stagnation."},
+];
+
+const RULES = [
+  {icon:"💧", text:"Drink 3–4 L water daily. Face fat responds fast to hydration + low sodium."},
+  {icon:"😴", text:"Sleep 7–8 hrs. Growth hormone peaks during deep sleep — muscle is built during recovery, not training."},
+  {icon:"🥩", text:"Protein target: 130–150 g/day. 1 g per pound of bodyweight minimum. Eggs, paneer, chicken, dal, Greek yogurt."},
+  {icon:"📈", text:"Progressive overload: add 2.5 kg to compounds every 2 weeks. Track every single session in your phone notes."},
+  {icon:"🪤", text:"Traps: go as heavy as possible on shrugs and rack pulls. They need maximum load to grow — don't baby them."},
+  {icon:"🌅", text:"Friday fasted morning incline walk is your single best belly-fat tool. Non-negotiable."},
+  {icon:"🚫", text:"Always do warm-up sets for compounds. Cold compound lifts lead to injury. Always ramp up to your working weight."},
+];
+
+const TAG_COLORS = {
+  COMPOUND:"#F1C40F", TRAPS:"#E74C3C",
+  ISOLATION:"#3498DB", CORE:"#9B59B6", HIIT:"#FF5733"
+};
+
+// ── RENDER HOME ──────────────────────────────────────────────
+function renderHome(){
+  // Split grid
+  const sg = document.getElementById('splitGrid');
+  sg.innerHTML = DAYS.map((d,i)=>`
+    <div class="split-card" style="--accent-color:${d.color}" onclick="showDay(${i})">
+      <div class="s-day">${d.label}</div>
+      <div class="s-tag">${d.tag}</div>
+      <div class="s-theme">${d.theme}</div>
+      <div class="s-time">${d.time}</div>
+    </div>`).join('');
+
+  // Muscle map
+  const mm = document.getElementById('muscleMap');
+  mm.innerHTML = MUSCLE_MAP.map(m=>`
+    <div class="muscle-row">
+      <span class="muscle-name" style="color:${m.color}">${m.muscle}</span>
+      <div class="muscle-days">
+        ${m.days.map(d=>`<span class="muscle-badge" style="color:${m.color};border-color:${m.color}44">${d}</span>`).join('')}
+      </div>
+    </div>`).join('');
+
+  // Why
+  const wg = document.getElementById('whyGrid');
+  wg.innerHTML = WHY.map(w=>`
+    <div class="why-card">
+      <div class="why-icon">${w.icon}</div>
+      <div class="why-title">${w.title}</div>
+      <div class="why-body">${w.body}</div>
+    </div>`).join('');
+
+  // Rules
+  const rl = document.getElementById('rulesList');
+  rl.innerHTML = RULES.map(r=>`
+    <div class="rule-item">
+      <span class="rule-icon">${r.icon}</span>
+      <span>${r.text}</span>
+    </div>`).join('');
+}
+
+// ── SHOW DAY ─────────────────────────────────────────────────
+let currentDay = null;
+function showDay(idx){
+  currentDay = idx;
+  const d = DAYS[idx];
+  const c = d.color;
+
+  // Update nav
+  document.querySelectorAll('.nav-day-btn').forEach((b,i)=>{
+    b.classList.toggle('active', i===idx);
+  });
+
+  // Hero
+  document.getElementById('dayHeroBg').style.background =
+    `radial-gradient(ellipse 60% 80% at 80% 50%, ${c}22, transparent)`;
+  document.getElementById('dayLabelText').textContent = d.label;
+  document.getElementById('dayLabelText').style.color = c;
+  document.getElementById('dayTimeText').textContent = `${d.day} · ${d.time}`;
+  document.getElementById('dayDurationText').textContent = d.duration;
+  document.getElementById('dayThemeText').textContent = d.theme;
+  document.getElementById('dayThemeText').style.color = c;
+  document.getElementById('daySubtitleText').textContent = d.subtitle;
+
+  // Freq chips
+  document.getElementById('dayFreqChips').innerHTML = d.frequency.map(f=>
+    `<span class="freq-chip" style="color:${c};border-color:${c}44">${f}</span>`
+  ).join('');
+
+  // Warmup
+  document.getElementById('warmupItems').innerHTML = d.warmup.map(w=>
+    `<div class="warmup-item">${w}</div>`
+  ).join('');
+
+  // Exercise blocks
+  const eb = document.getElementById('exerciseBlocks');
+  eb.innerHTML = d.blocks.map((block,bi)=>{
+    const tc = TAG_COLORS[block.tag] || '#888';
+    return `
+      <div class="ex-block">
+        <div class="ex-block-header" onclick="toggleBlock(${bi})">
+          <div class="ex-block-header-left">
+            <span class="ex-block-tag" style="color:${tc};border-color:${tc}55">${block.tag}</span>
+            <span class="ex-block-title">${block.title}</span>
+          </div>
+          <span class="ex-block-chevron" id="chev-${bi}">+</span>
+        </div>
+        <div id="block-${bi}" style="display:none;background:#090909">
+          <table class="ex-table">
+            <thead class="ex-table-head">
+              <tr>
+                <th>Exercise</th>
+                <th>Sets</th>
+                <th>Reps</th>
+                <th>Rest</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${block.exercises.map(ex=>`
+                <tr class="ex-row">
+                  <td>
+                    <span class="ex-name">${ex[0]}</span>
+                    <span class="ex-tip">💡 ${ex[4]}</span>
+                  </td>
+                  <td><div class="ex-sets" style="color:${tc}">${ex[1]}</div></td>
+                  <td><div class="ex-reps">${ex[2]}</div></td>
+                  <td><div class="ex-rest">${ex[3]}</div></td>
+                </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>`;
+  }).join('');
+
+  // Cooldown
+  document.getElementById('cooldownText').textContent = d.cooldown;
+
+  // Day nav
+  const nav = document.getElementById('dayNav');
+  nav.innerHTML = '';
+  if(idx > 0){
+    const prev = document.createElement('button');
+    prev.className = 'day-nav-btn';
+    prev.textContent = `← ${DAYS[idx-1].label}`;
+    prev.style.borderColor = DAYS[idx-1].color+'44';
+    prev.style.color = DAYS[idx-1].color;
+    prev.onclick = ()=>showDay(idx-1);
+    nav.appendChild(prev);
+  }
+  if(idx < DAYS.length-1){
+    const next = document.createElement('button');
+    next.className = 'day-nav-btn next';
+    next.textContent = `${DAYS[idx+1].label} →`;
+    next.style.borderColor = DAYS[idx+1].color+'44';
+    next.style.color = DAYS[idx+1].color;
+    next.onclick = ()=>showDay(idx+1);
+    nav.appendChild(next);
+  }
+
+  // Switch views
+  document.getElementById('homeView').style.display = 'none';
+  document.getElementById('day-view').style.display = 'block';
+  window.scrollTo({top:0,behavior:'smooth'});
+
+  // Auto-open first block
+  toggleBlock(0);
+  closeMenu();
+}
+
+function showHome(){
+  document.getElementById('day-view').style.display = 'none';
+  document.getElementById('homeView').style.display = 'block';
+  document.querySelectorAll('.nav-day-btn').forEach(b=>b.classList.remove('active'));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleBlock(bi){
+  const body = document.getElementById(`block-${bi}`);
+  const chev = document.getElementById(`chev-${bi}`);
+  if(!body) return;
+  const open = body.style.display !== 'none';
+  body.style.display = open ? 'none' : 'block';
+  chev.textContent = open ? '+' : '−';
+  chev.classList.toggle('open', !open);
+}
+
+// Mobile menu
+function toggleMenu(){
+  document.getElementById('navDays').classList.toggle('open');
+}
+function closeMenu(){
+  document.getElementById('navDays').classList.remove('open');
+}
+
+// Scroll reveal
+function initReveal(){
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+  },{threshold:.1});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+}
+
+// ── INIT ─────────────────────────────────────────────────────
+renderHome();
+initReveal();
+</script>
+</body>
+</html>
