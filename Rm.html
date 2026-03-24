@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>90-Day Career Switch Roadmap</title>
+<style>
+  :root {
+    --bg: #07070a;
+    --s1: #0e0e14;
+    --s2: #14141e;
+    --s3: #1c1c28;
+    --border: #22222f;
+    --text: #d4d4e0;
+    --muted: #5a5a72;
+    --amber: #f59e0b;
+    --amber-dim: rgba(245,158,11,0.12);
+    --green: #22c55e;
+    --green-dim: rgba(34,197,94,0.12);
+    --blue: #60a5fa;
+    --blue-dim: rgba(96,165,250,0.12);
+    --red: #f87171;
+    --red-dim: rgba(248,113,113,0.12);
+    --purple: #c084fc;
+    --purple-dim: rgba(192,132,252,0.12);
+    --teal: #2dd4bf;
+    --teal-dim: rgba(45,212,191,0.12);
+    --radius: 8px;
+    --mono: 'Courier New', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: Georgia, serif; font-size: 15px; line-height: 1.6; min-height: 100vh; }
+
+  /* ── HEADER ── */
+  .header { background: var(--s1); border-bottom: 1px solid var(--border); padding: 1.4rem 1.2rem 1rem; position: sticky; top: 0; z-index: 100; }
+  .header-inner { max-width: 860px; margin: 0 auto; }
+  .header-top { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.6rem; }
+  .header h1 { font-size: clamp(1.1rem, 3vw, 1.5rem); font-weight: 700; letter-spacing: -0.02em; }
+  .header h1 span { color: var(--amber); }
+  .header-meta { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); margin-top: 0.3rem; }
+  .overall-progress { margin-top: 0.8rem; }
+  .prog-bar-wrap { background: var(--s3); border-radius: 99px; height: 5px; width: 100%; }
+  .prog-bar { height: 5px; border-radius: 99px; background: linear-gradient(90deg, var(--amber), var(--green)); transition: width 0.4s; }
+  .prog-label { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); margin-top: 0.3rem; display: flex; justify-content: space-between; }
+
+  /* ── NAV ── */
+  .nav { background: var(--s1); border-bottom: 1px solid var(--border); overflow-x: auto; }
+  .nav-inner { max-width: 860px; margin: 0 auto; display: flex; }
+  .nav-btn { background: none; border: none; border-bottom: 2px solid transparent; color: var(--muted); padding: 0.75rem 0.9rem; font-family: var(--mono); font-size: 0.68rem; cursor: pointer; white-space: nowrap; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.15s, border-color 0.15s; }
+  .nav-btn.active { color: var(--amber); border-bottom-color: var(--amber); }
+  .nav-btn:hover:not(.active) { color: var(--text); }
+
+  /* ── MAIN ── */
+  .main { max-width: 860px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+  .tab { display: none; }
+  .tab.active { display: block; }
+
+  /* ── SECTION LABEL ── */
+  .sec-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
+
+  /* ── CARDS ── */
+  .card { background: var(--s1); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.1rem; margin-bottom: 0.7rem; }
+  .card-accent-amber { border-left: 3px solid var(--amber); }
+  .card-accent-green { border-left: 3px solid var(--green); }
+  .card-accent-blue { border-left: 3px solid var(--blue); }
+  .card-accent-purple { border-left: 3px solid var(--purple); }
+  .card-accent-teal { border-left: 3px solid var(--teal); }
+  .card-accent-red { border-left: 3px solid var(--red); }
+
+  /* ── MONTH TABS ── */
+  .month-tabs { display: flex; gap: 0.4rem; margin-bottom: 1rem; }
+  .m-tab { flex: 1; background: var(--s2); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.6rem 0.4rem; cursor: pointer; font-family: var(--mono); font-size: 0.68rem; text-align: center; color: var(--muted); transition: all 0.15s; }
+  .m-tab.active { background: var(--amber-dim); border-color: var(--amber); color: var(--amber); font-weight: 700; }
+
+  /* ── WEEK ACCORDION ── */
+  .week-card { background: var(--s1); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 0.6rem; overflow: hidden; }
+  .week-header { width: 100%; background: none; border: none; padding: 0.9rem 1rem; cursor: pointer; display: flex; justify-content: space-between; align-items: flex-start; text-align: left; }
+  .week-title { font-size: 0.88rem; font-weight: 700; color: var(--text); }
+  .week-sub { font-family: var(--mono); font-size: 0.62rem; color: var(--muted); margin-top: 0.2rem; }
+  .week-critical { font-family: var(--mono); font-size: 0.65rem; color: var(--amber); margin-top: 0.25rem; }
+  .week-prog { font-family: var(--mono); font-size: 0.6rem; color: var(--green); margin-top: 0.2rem; }
+  .week-chevron { color: var(--muted); font-size: 1rem; flex-shrink: 0; margin-left: 0.5rem; transition: transform 0.2s; }
+  .week-body { display: none; padding: 0 1rem 1rem; }
+  .week-body.open { display: block; }
+  .week-chevron.open { transform: rotate(180deg); }
+
+  /* ── TASK ITEMS ── */
+  .task-section-label { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin: 0.8rem 0 0.5rem; }
+  .task-item { display: flex; align-items: flex-start; gap: 0.7rem; padding: 0.6rem 0.7rem; background: var(--s2); border-radius: 6px; margin-bottom: 0.35rem; cursor: pointer; transition: background 0.15s; }
+  .task-item:hover { background: var(--s3); }
+  .task-item.done { opacity: 0.45; }
+  .task-item.done .task-text { text-decoration: line-through; }
+  .task-check { width: 16px; height: 16px; border: 1.5px solid var(--border); border-radius: 3px; flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+  .task-item.done .task-check { background: var(--green); border-color: var(--green); }
+  .task-check-tick { color: #000; font-size: 0.65rem; font-weight: 900; display: none; }
+  .task-item.done .task-check-tick { display: block; }
+  .task-content { flex: 1; }
+  .task-tag { font-family: var(--mono); font-size: 0.58rem; font-weight: 700; padding: 0.1rem 0.4rem; border-radius: 3px; margin-right: 0.4rem; display: inline-block; }
+  .tag-sql { background: var(--blue-dim); color: var(--blue); }
+  .tag-english { background: var(--red-dim); color: var(--red); }
+  .tag-linkedin { background: var(--blue-dim); color: var(--blue); }
+  .tag-apply { background: var(--purple-dim); color: var(--purple); }
+  .tag-resume { background: var(--green-dim); color: var(--green); }
+  .tag-excel { background: var(--teal-dim); color: var(--teal); }
+  .tag-weekend { background: var(--amber-dim); color: var(--amber); }
+  .task-text { font-size: 0.8rem; color: var(--text); line-height: 1.5; }
+  .task-detail { font-size: 0.75rem; color: var(--muted); margin-top: 0.2rem; line-height: 1.5; }
+
+  /* ── DELIVERABLES ── */
+  .deliverable { display: flex; gap: 0.5rem; align-items: flex-start; font-size: 0.79rem; color: #aaa; margin-bottom: 0.3rem; }
+  .deliverable-dot { color: var(--amber); flex-shrink: 0; margin-top: 2px; }
+
+  /* ── LINKEDIN CALENDAR ── */
+  .li-week { background: var(--s1); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 0.6rem; overflow: hidden; }
+  .li-week-header { padding: 0.8rem 1rem; display: flex; gap: 0.8rem; align-items: flex-start; cursor: pointer; }
+  .li-week-num { font-family: var(--mono); font-size: 0.6rem; color: var(--blue); background: var(--blue-dim); padding: 0.15rem 0.5rem; border-radius: 3px; white-space: nowrap; flex-shrink: 0; margin-top: 2px; }
+  .li-week-title { font-weight: 700; font-size: 0.88rem; color: var(--text); }
+  .li-week-hook { font-size: 0.75rem; color: var(--muted); margin-top: 0.2rem; font-style: italic; }
+  .li-body { display: none; padding: 0 1rem 1rem; border-top: 1px solid var(--border); }
+  .li-body.open { display: block; }
+  .li-field { margin-top: 0.8rem; }
+  .li-field-label { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.3rem; }
+  .li-field-text { font-size: 0.8rem; color: #bbb; line-height: 1.65; background: var(--s2); border-radius: 6px; padding: 0.6rem 0.8rem; white-space: pre-wrap; }
+  .li-hashtags { font-family: var(--mono); font-size: 0.7rem; color: var(--blue); margin-top: 0.5rem; }
+  .copy-btn { background: var(--s3); border: 1px solid var(--border); color: var(--muted); font-family: var(--mono); font-size: 0.62rem; padding: 0.3rem 0.7rem; border-radius: 4px; cursor: pointer; margin-top: 0.6rem; transition: all 0.15s; }
+  .copy-btn:hover { color: var(--text); border-color: var(--muted); }
+  .copy-btn.copied { color: var(--green); border-color: var(--green); }
+
+  /* ── JOBS ── */
+  .job-card { background: var(--s1); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.9rem 1rem; margin-bottom: 0.6rem; }
+  .job-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.4rem; }
+  .job-company { font-weight: 700; font-size: 0.9rem; color: var(--text); }
+  .job-role { font-size: 0.8rem; color: var(--muted); margin-top: 0.15rem; }
+  .job-fit { font-family: var(--mono); font-size: 0.6rem; padding: 0.15rem 0.5rem; border-radius: 3px; white-space: nowrap; }
+  .fit-high { background: var(--green-dim); color: var(--green); }
+  .fit-med { background: var(--amber-dim); color: var(--amber); }
+  .job-tags { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-top: 0.5rem; }
+  .job-tag { font-family: var(--mono); font-size: 0.6rem; color: var(--muted); background: var(--s2); border: 1px solid var(--border); padding: 0.1rem 0.45rem; border-radius: 3px; }
+  .job-note { font-size: 0.76rem; color: var(--muted); margin-top: 0.5rem; line-height: 1.5; border-top: 1px solid var(--border); padding-top: 0.5rem; }
+  .job-apply { display: inline-block; margin-top: 0.5rem; font-family: var(--mono); font-size: 0.62rem; color: var(--amber); text-decoration: none; border: 1px solid var(--amber-dim); padding: 0.25rem 0.6rem; border-radius: 4px; }
+  .job-apply:hover { background: var(--amber-dim); }
+  .job-timing { font-family: var(--mono); font-size: 0.6rem; color: var(--muted); margin-top: 0.3rem; }
+
+  /* ── NEGOTIATION ── */
+  .neg-card { background: var(--s1); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 0.6rem; overflow: hidden; }
+  .neg-header { padding: 0.9rem 1rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+  .neg-scenario { font-weight: 700; font-size: 0.85rem; color: var(--text); }
+  .neg-type { font-family: var(--mono); font-size: 0.6rem; color: var(--purple); background: var(--purple-dim); padding: 0.15rem 0.5rem; border-radius: 3px; }
+  .neg-body { display: none; padding: 0 1rem 1rem; border-top: 1px solid var(--border); }
+  .neg-body.open { display: block; }
+  .neg-context { font-size: 0.78rem; color: var(--muted); margin-top: 0.7rem; line-height: 1.5; font-style: italic; }
+  .neg-say { background: var(--s2); border-left: 3px solid var(--green); border-radius: 6px; padding: 0.7rem 0.9rem; margin-top: 0.7rem; font-size: 0.82rem; color: var(--text); line-height: 1.7; }
+  .neg-say-label { font-family: var(--mono); font-size: 0.58rem; color: var(--green); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.3rem; }
+  .neg-followup { background: var(--s2); border-left: 3px solid var(--amber); border-radius: 6px; padding: 0.7rem 0.9rem; margin-top: 0.5rem; font-size: 0.82rem; color: var(--text); line-height: 1.7; }
+  .neg-followup-label { font-family: var(--mono); font-size: 0.58rem; color: var(--amber); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.3rem; }
+  .neg-rule { font-size: 0.76rem; color: var(--muted); margin-top: 0.6rem; line-height: 1.5; }
+
+  /* ── MISC UTILS ── */
+  .tag-badge { font-family: var(--mono); font-size: 0.58rem; padding: 0.12rem 0.45rem; border-radius: 3px; display: inline-block; }
+  .pill-amber { background: var(--amber-dim); color: var(--amber); }
+  .pill-green { background: var(--green-dim); color: var(--green); }
+  .pill-blue { background: var(--blue-dim); color: var(--blue); }
+  .pill-red { background: var(--red-dim); color: var(--red); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+  @media(max-width:560px){ .grid2 { grid-template-columns: 1fr; } }
+  .info-box { background: var(--s2); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.9rem 1rem; margin-bottom: 0.7rem; }
+  .info-box-label { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
+  .info-box ul { padding-left: 1rem; }
+  .info-box li { font-size: 0.79rem; color: #aaa; margin-bottom: 0.25rem; line-height: 1.5; }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 1.2rem 0; }
+  .month-badge { font-family: var(--mono); font-size: 0.6rem; padding: 0.15rem 0.5rem; border-radius: 3px; display: inline-block; margin-right: 0.4rem; }
+  .reset-btn { background: none; border: 1px solid var(--border); color: var(--muted); font-family: var(--mono); font-size: 0.6rem; padding: 0.2rem 0.6rem; border-radius: 4px; cursor: pointer; float: right; }
+  .reset-btn:hover { color: var(--red); border-color: var(--red); }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div class="header-top">
+      <div>
+        <h1><span>90-Day</span> Career Switch Roadmap</h1>
+        <div class="header-meta">Financial Crime → Fintech-Direct · Starting Today</div>
+      </div>
+      <button class="reset-btn" onclick="resetAll()">Reset Progress</button>
+    </div>
+    <div class="overall-progress">
+      <div class="prog-bar-wrap"><div class="prog-bar" id="overall-bar" style="width:0%"></div></div>
+      <div class="prog-label"><span id="overall-label">0 of 0 tasks complete</span><span id="overall-pct">0%</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <div class="nav-inner">
+    <button class="nav-btn active" onclick="showTab('plan',this)">Plan</button>
+    <button class="nav-btn" onclick="showTab('linkedin',this)">LinkedIn</button>
+    <button class="nav-btn" onclick="showTab('jobs',this)">Jobs</button>
+    <button class="nav-btn" onclick="showTab('negotiate',this)">Negotiate</button>
+    <button class="nav-btn" onclick="showTab('rules',this)">Rules</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+<!-- ══════════════════════════════════════════
+     TAB 1 — PLAN
+══════════════════════════════════════════ -->
+<div class="tab active" id="tab-plan">
+  <div class="month-tabs">
+    <div class="m-tab active" onclick="showMonth(1,this)">Month 1<br><small>Days 1–30</small></div>
+    <div class="m-tab" onclick="showMonth(2,this)">Month 2<br><small>Days 31–60</small></div>
+    <div class="m-tab" onclick="showMonth(3,this)">Month 3<br><small>Days 61–90</small></div>
+  </div>
+  <div id="month-content"></div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TAB 2 — LINKEDIN CALENDAR
+══════════════════════════════════════════ -->
+<div class="tab" id="tab-linkedin">
+  <div class="sec-label">12-Week LinkedIn Content Calendar</div>
+  <div class="card card-accent-blue" style="margin-bottom:1rem;">
+    <div style="font-size:0.8rem;color:#aaa;line-height:1.65;">
+      <strong style="color:var(--blue);">Strategy:</strong> 3 posts in first 2 weeks to build algorithm momentum. Then 1 post per week. All posts written from real investigation experience — not textbook theory. Fintech hiring managers can tell the difference.
+    </div>
+  </div>
+  <div id="linkedin-posts"></div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TAB 3 — JOBS
+══════════════════════════════════════════ -->
+<div class="tab" id="tab-jobs">
+  <div class="sec-label">Target Roles — Aligned to Goals</div>
+  <div class="card" style="margin-bottom:1rem;background:var(--amber-dim);border-color:var(--amber);">
+    <div style="font-size:0.78rem;color:#bbb;line-height:1.6;">Apply in waves — not all at once. <strong style="color:var(--amber);">Wave 1 (Day 15):</strong> Tier 1 fintech-direct. <strong style="color:var(--amber);">Wave 2 (Day 30):</strong> GCC banks + Big 4. <strong style="color:var(--amber);">Wave 3 (Day 45):</strong> Backup + emerging fintech. Never stop applying until offer letter is signed.</div>
+  </div>
+  <div id="jobs-list"></div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TAB 4 — NEGOTIATE
+══════════════════════════════════════════ -->
+<div class="tab" id="tab-negotiate">
+  <div class="sec-label">Salary Negotiation Scripts</div>
+  <div class="grid2" style="margin-bottom:1rem;">
+    <div class="info-box">
+      <div class="info-box-label" style="color:var(--green);">Your Numbers</div>
+      <ul>
+        <li><strong>Floor:</strong> ₹9L — never go below this</li>
+        <li><strong>Target:</strong> ₹11–12L — what you aim for</li>
+        <li><strong>Stretch:</strong> ₹14–15L — GCC bank roles</li>
+        <li><strong>Current:</strong> ₹4.5L — never reveal first</li>
+      </ul>
+    </div>
+    <div class="info-box">
+      <div class="info-box-label" style="color:var(--red);">Never Do This</div>
+      <ul>
+        <li>Never accept on the spot — always 24hr</li>
+        <li>Never reveal current salary if avoidable</li>
+        <li>Never give a single number — give a range</li>
+        <li>Never apologise for negotiating</li>
+      </ul>
+    </div>
+  </div>
+  <div id="negotiate-list"></div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TAB 5 — RULES
+══════════════════════════════════════════ -->
+<div class="tab" id="tab-rules">
+  <div class="sec-label">Non-Negotiable Rules</div>
+  <div class="card card-accent-green" style="margin-bottom:0.7rem;">
+    <div class="info-box-label" style="color:var(--green);">Daily Non-Negotiables</div>
+    <ul style="padding-left:1rem;">
+      <li style="font-size:0.8rem;color:#aaa;margin-bottom:0.3rem;line-height:1.5;">English investigation narration: 7 days a week, no exceptions. This is your #1 interview bottleneck.</li>
+      <li style="font-size:0.8rem;color:#aaa;margin-bottom:0.3rem;line-height:1.5;">SQL: minimum 5 sessions per week in Month 1. Reduces to 3–4 in Month 2.</li>
+      <li style="font-size:0.8rem;color:#aaa;margin-bottom:0.3rem;line-height:1.5;">Update job tracker every time you apply or get a response.</li>
+      <li style="font-size:0.8rem;color:#aaa;margin-bottom:0.3rem;line-height:1.5;">Never stop applying until offer letter is physically signed.</li>
+      <li style="font-size:0.8rem;color:#aaa;line-height:1.5;">Record every mock interview. Watch it back. Growth is visible this way.</li>
+    </ul>
+  </div>
+  <div class="card card-accent-red" style="margin-bottom:0.7rem;">
+    <div class="info-box-label" style="color:var(--red);">Plan Killers — Avoid These</div>
+    <ul style="padding-left:1rem;">
+      <li style="font-size:0.8rem;color:#aaa;margin-bottom:0.3rem;line-height:1.5;">Skipping English because you are tired — this is when the habit actually forms.</li>
+      <li style="font-size:0.8rem;color:#aaa;margin-bottom:0.3rem;line-height:1.5;">Applying before Resume Version A is locked — one weak application to a top company closes that door for months.</li>
+      <li style="font-size:0.8rem;color:#aaa;margin-bottom:0.3rem;line-height:1.5;">Accepting the first offer without negotiating even once.</li>
+      <li style="font-size:0.8rem;color:#aaa;margin-bottom:0.3rem;line-height:1.5;">Stopping applications once interviews start — the pipeline is your leverage.</li>
+      <li style="font-size:0.8rem;color:#aaa;line-height:1.5;">Applying to KYC-only roles — you are already above that level.</li>
+    </ul>
+  </div>
+  <div class="card card-accent-amber">
+    <div class="info-box-label" style="color:var(--amber);">AI-Proof Career Path (Long Term)</div>
+    <div style="font-size:0.8rem;color:#aaa;line-height:1.65;">
+      <strong style="color:var(--amber);">Year 1–2:</strong> Merchant Risk / FC Analyst at fintech-direct. Own investigation quality, start touching risk policies.<br><br>
+      <strong style="color:var(--amber);">Year 2–4:</strong> Senior Analyst. Move toward risk governance — why rules exist, what typologies are missed, how to reduce false positives.<br><br>
+      <strong style="color:var(--amber);">Year 4–6:</strong> Financial Crime Advisory (Big 4) or Risk Policy Lead (global fintech). International mobility opens here.<br><br>
+      <strong style="color:var(--amber);">Year 6+:</strong> UAE → Singapore → UK / Ireland. MLRO track or Financial Crime Consulting Lead.
+    </div>
+  </div>
+  <hr class="divider"/>
+  <div class="sec-label">Free Resources</div>
+  <div class="grid2">
+    <div class="info-box">
+      <div class="info-box-label" style="color:var(--blue);">SQL</div>
+      <ul>
+        <li>sqlzoo.net — Tutorials 0–7</li>
+        <li>mode.com/sql-tutorial — Window functions</li>
+        <li>leetcode.com/problemset/database</li>
+        <li>strataScratch.com — Financial queries</li>
+      </ul>
+    </div>
+    <div class="info-box">
+      <div class="info-box-label" style="color:var(--red);">English</div>
+      <ul>
+        <li>Phone voice memo — narrate cases daily</li>
+        <li>youglish.com — hear words in context</li>
+        <li>YouTube: Bloomberg Technology</li>
+        <li>bbclearningenglish.com — commute only</li>
+      </ul>
+    </div>
+    <div class="info-box">
+      <div class="info-box-label" style="color:var(--amber);">Domain / AML</div>
+      <ul>
+        <li>fatf-gafi.org — typologies (free PDF)</li>
+        <li>acams.org — CAMS candidate handbook</li>
+        <li>fincen.gov — SAR guidance</li>
+        <li>fincrimejobs.in — India AML job board</li>
+      </ul>
+    </div>
+    <div class="info-box">
+      <div class="info-box-label" style="color:var(--purple);">Job Boards</div>
+      <ul>
+        <li>linkedin.com/jobs — set alerts</li>
+        <li>naukri.com — India coverage</li>
+        <li>cutshort.io — fintech focus</li>
+        <li>fincrimejobs.in — niche AML roles</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<script>
+// ═══════════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════════
+
+const MONTHS = [
+  {
+    id: 1,
+    theme: "BUILD FAST. APPLY EARLY.",
+    tagline: "Resume by Day 5. Applications by Day 15. Zero waiting.",
+    weeks: [
+      {
+        id:"w1", days:"Days 1–7", title:"Week 1 — Resume, SQL, Narration, LinkedIn",
+        focus:"4 tracks simultaneously from Day 1. Hardest week. Push through.",
+        critical:"⚡ Resume Version A locked by Day 5 — non-negotiable.",
+        tasks:[
+          {id:"w1-1",tag:"sql",text:"SQLZoo Tutorials 0–2",detail:"SELECT, WHERE, ORDER BY, LIMIT. Write 3 queries from scratch nightly — no notes."},
+          {id:"w1-2",tag:"sql",text:"SQLZoo Tutorial 3 — GROUP BY, COUNT, SUM",detail:"Days 4–5. Write 5 aggregation queries from scratch by Day 5."},
+          {id:"w1-3",tag:"sql",text:"INNER JOIN + LEFT JOIN introduction",detail:"Days 6–7. Write 5 JOIN queries from scratch by Day 7 — W3Schools reference."},
+          {id:"w1-4",tag:"english",text:"Investigation narration — 3 min timed, recorded",detail:"Pick a real case (anonymize). Speak for 3 min. Record. Listen back. Note 2 improvements. Every night."},
+          {id:"w1-5",tag:"resume",text:"Resume Version A — rewrite bullets for fintech framing",detail:"Use: 'Conducted', 'Identified', 'Produced'. Name CLEAR by Thomson Reuters. Name SAR writing for APAC/EMEA/Americas explicitly."},
+          {id:"w1-6",tag:"resume",text:"Resume Version A — LOCKED by Day 5",detail:"Stop editing. It is ready enough. Perfecting it later costs you interview opportunities now."},
+          {id:"w1-7",tag:"linkedin",text:"LinkedIn: update photo, headline, about, experience",detail:"Headline: Financial Crime Investigator | Merchant Risk & SAR Writing | Global Payments | Open to EMEA/APAC/Americas Shift Alignment"},
+          {id:"w1-w1",tag:"weekend",text:"Weekend: Publish LinkedIn Post #1",detail:"Topic: Rapid fund pass-through — what it looks like in real transaction data. 3 short paragraphs. No jargon."},
+          {id:"w1-w2",tag:"weekend",text:"Weekend: Add 30+ LinkedIn connections",detail:"AML professionals, MBA classmates, ex-colleagues. Follow PayU, Razorpay, Mastercard India, Deloitte India pages."},
+          {id:"w1-w3",tag:"weekend",text:"Weekend: Download Kaggle transaction dataset",detail:"Run 5 basic queries against real data. kaggle.com — search 'financial transactions'."},
+        ],
+        deliverables:["Resume Version A: locked by Day 5","LinkedIn live with shift alignment in headline","Post #1 published","30+ connections added","SQL: SELECT, WHERE, GROUP BY, JOIN — all working"]
+      },
+      {
+        id:"w2", days:"Days 8–14", title:"Week 2 — SQL Intermediate + 2 More Posts + Company Research",
+        focus:"SQL JOINs locked. 2 more LinkedIn posts live. 5 companies researched. Ready to apply Day 15.",
+        critical:"⚡ Posts #2 and #3 must go live this week. Algorithm momentum is built in first 2 weeks.",
+        tasks:[
+          {id:"w2-1",tag:"sql",text:"Subqueries — SELECT inside SELECT",detail:"Days 8–9. Practice: 'Find merchants whose txn count is above average.' W3Schools subquery section."},
+          {id:"w2-2",tag:"sql",text:"CASE WHEN statements — 5 queries per night",detail:"Days 10–11. Think: Flag transactions above ₹5L as HIGH_RISK, ₹1L–5L as MEDIUM, below as LOW."},
+          {id:"w2-3",tag:"sql",text:"Mix subqueries + CASE WHEN + JOIN in same query",detail:"Days 12–14. Interview-level SQL. Do not skip even if difficult."},
+          {id:"w2-4",tag:"english",text:"STAR story bank — 1 case story per night",detail:"Structure: Situation → Task → Action (specific data points) → Result. Write it. Speak it 2 min without reading. Record."},
+          {id:"w2-5",tag:"english",text:"Tell me about yourself — 90 sec recorded",detail:"Days 12–14. No reading from paper. Glance at bullet points only. Record Day 14."},
+          {id:"w2-6",tag:"linkedin",text:"Publish Post #2 — Fintech merchant risk vs traditional AML",detail:"Day 10. Why fintech merchant risk is a different problem. From real investigation experience."},
+          {id:"w2-7",tag:"linkedin",text:"Publish Post #3 — Transaction laundering in payments",detail:"Day 13. Why it is harder to catch than traditional ML. Specific data indicators."},
+          {id:"w2-8",tag:"resume",text:"Resume Versions B and C — drafted",detail:"Version B: GCC banks — SAR + sanctions emphasis. Version C: Big 4 — typologies + investigation quality."},
+          {id:"w2-w1",tag:"weekend",text:"Weekend: SQL Mock #1 — 45 min timer, 15 queries",detail:"All types: SELECT, JOIN, GROUP BY, subquery, CASE WHEN. Grade yourself. Note gaps."},
+          {id:"w2-w2",tag:"weekend",text:"Weekend: 5 customised cover notes ready",detail:"3 sentences each: (1) relevant experience (2) specific knowledge of their business (3) why this company."},
+          {id:"w2-w3",tag:"weekend",text:"Weekend: Job tracker Google Sheet created",detail:"Columns: Company, Role, Version Used, Date Applied, HR Contact, Status, Follow-up Date, Notes."},
+        ],
+        deliverables:["Posts #2 and #3 published","100+ LinkedIn connections","5 STAR stories written and spoken","Subqueries + CASE WHEN working","Resume B and C drafted","Job tracker created"]
+      },
+      {
+        id:"w3", days:"Days 15–21", title:"Week 3 — FIRST 5 APPLICATIONS LIVE (Day 15)",
+        focus:"Applications begin Day 15. 16 days earlier than original plan. This is the core efficiency gain.",
+        critical:"⚡ Do not wait for perfect SQL. You need it ready before technical round — which arrives 3–4 weeks after application.",
+        tasks:[
+          {id:"w3-1",tag:"apply",text:"Day 15: Apply to PayU + Razorpay",detail:"Merchant Risk / Risk Analyst roles. Resume Version A. Customised cover note for each."},
+          {id:"w3-2",tag:"apply",text:"Day 16: Apply to Pine Labs + Cashfree",detail:"Fraud/Compliance + Compliance Analyst roles. Resume Version A."},
+          {id:"w3-3",tag:"apply",text:"Day 17: Apply to Mastercard GCC India",detail:"Financial Crime Analyst. Resume Version B — SAR + sanctions emphasis."},
+          {id:"w3-4",tag:"apply",text:"Days 18–19: Apply to Amex India + BharatPe",detail:"Fraud Risk + Risk roles. Match resume version to JD language."},
+          {id:"w3-5",tag:"apply",text:"Set job alerts on all 4 platforms",detail:"LinkedIn, Naukri, Cutshort, Instahyre. Keywords: Merchant Risk Analyst, Financial Crime Analyst, Fraud Risk Analyst."},
+          {id:"w3-6",tag:"sql",text:"Window functions — ROW_NUMBER, RANK, DENSE_RANK",detail:"Days 15–17. Mode Analytics SQL Tutorial — free. Practice: Rank merchants by total txn volume this month."},
+          {id:"w3-7",tag:"sql",text:"LAG and LEAD functions",detail:"Days 18–19. Compare each transaction to previous transaction by same merchant. Flag if gap under 30 seconds."},
+          {id:"w3-8",tag:"english",text:"Screening call preparation — simulated nightly",detail:"Phone rings → breathe → 'Hello, this is [name] speaking.' Tell me about yourself 90 sec. Salary expectations: 'I am targeting ₹11–14L.' Record every session."},
+          {id:"w3-w1",tag:"weekend",text:"Weekend: Mock Interview #1 — 30 min, video recorded",detail:"Tell me about yourself / complex case walkthrough / what is transaction laundering / SQL on paper. Watch it back."},
+          {id:"w3-w2",tag:"weekend",text:"Weekend: Research 5 target companies",detail:"Find 3 people at each company on LinkedIn. Note names in job tracker — for referral outreach in Week 7."},
+        ],
+        deliverables:["7 applications submitted by Day 21","Job alerts live on 4 platforms","Window functions started","Mock Interview #1 recorded","Post #4 published this week"]
+      },
+      {
+        id:"w4", days:"Days 22–30", title:"Week 4 — Second Wave + SQL Complete + Excel",
+        focus:"5 more applications. SQL 100% interview-ready. First screening calls arriving.",
+        critical:"⚡ By Day 30: 12+ applications live, SQL complete, Excel basics done.",
+        tasks:[
+          {id:"w4-1",tag:"apply",text:"Apply to Deloitte USI + KPMG Global Services",detail:"Financial Crime Advisory + AML roles. Resume Version C. Big 4 processes take 6–8 weeks — start now."},
+          {id:"w4-2",tag:"apply",text:"Apply to PhonePe + Western Union India + Checkout.com",detail:"Financial Crime + AML Compliance + Merchant Risk. Resume Version A or B depending on JD."},
+          {id:"w4-3",tag:"sql",text:"LAG/LEAD deep practice — 5 queries per night",detail:"Days 22–24. '% change in txn volume vs previous week per merchant.' Transaction-specific."},
+          {id:"w4-4",tag:"sql",text:"LeetCode Easy SQL — 5 problems under 10 min each",detail:"Days 25–27. Untimed first pass, then time yourself. Any failure — review that concept immediately."},
+          {id:"w4-5",tag:"sql",text:"Full SQL Mock Test #2 — 20 queries, 45 min timer",detail:"Days 28–30. All types. Target: 80%+ accuracy. This is your benchmark before technical rounds arrive."},
+          {id:"w4-6",tag:"excel",text:"Pivot tables — ExcelJet.net tutorial",detail:"Days 22–24. Build 3 pivot tables independently from sample dataset. No hand-holding."},
+          {id:"w4-7",tag:"excel",text:"VLOOKUP and XLOOKUP — 10 practice exercises",detail:"Days 25–26. ExcelJet.net reference. This covers 80% of what interviews test."},
+          {id:"w4-8",tag:"english",text:"Panel interview prep — 3-chair simulation",detail:"Set 3 chairs. Practice talking to all 3 positions. Freeze recovery: 'That is a really important point — let me think through it for a moment.' Practice freezing and recovering 5x per session."},
+          {id:"w4-w1",tag:"weekend",text:"Weekend: Interview Answer Bank — 12 questions written",detail:"3 investigation stories, 2 typology explanations, 2 behavioural answers, 3 company-specific, 2 smart questions to ask."},
+          {id:"w4-w2",tag:"weekend",text:"Weekend: Salary research documented",detail:"Glassdoor, AmbitionBox, LinkedIn Salary for target roles. Document floor ₹9L / target ₹12L / stretch ₹14–15L."},
+        ],
+        deliverables:["12+ total applications by Day 30","SQL 100% interview-ready","Excel: pivot + VLOOKUP done","Interview Answer Bank: 12 questions","Salary numbers documented","Follow-up messages sent to Week 3 applications"]
+      }
+    ]
+  },
+  {
+    id: 2,
+    theme: "CONVERT CALLBACKS",
+    tagline: "Screening calls → Technical rounds → Final interviews. Keep pipeline warm.",
+    weeks: [
+      {
+        id:"w5", days:"Days 31–37", title:"Week 5 — Screening Calls + Second Batch",
+        focus:"Callbacks from Week 3 applications arriving now. Keep applying simultaneously.",
+        critical:"⚡ Do not stop applying when callbacks begin. Always have 5+ active processes running.",
+        tasks:[
+          {id:"w5-1",tag:"sql",text:"Transaction query specialisation — 1 complex query per night",detail:"'Flag merchants with >5 txns from same IP within 1 hour.' 'Merchants where outgoing >90% of incoming in 7 days.' Build your personal query library."},
+          {id:"w5-2",tag:"english",text:"Screening call debrief after every real call",detail:"Immediately write every question asked. Record 3-min voice note on what went well and what to improve. Practice that exact answer better next night."},
+          {id:"w5-3",tag:"apply",text:"Apply to EY GDS + Stripe India + Paytm + Juspay + Nium",detail:"Forensics/Integrity + Compliance + Risk/FC + Fraud + Financial Crime Analyst roles."},
+          {id:"w5-4",tag:"resume",text:"CAMS Candidate Handbook — 20 pages per session",detail:"Download free from acams.org. Domain reinforcement — sharpens interview vocabulary directly."},
+          {id:"w5-w1",tag:"weekend",text:"Weekend: Mock Interview #2 — video recorded",detail:"'Difference between money laundering and fraud?' / 'How do you identify a mule merchant?' / 'Walk through your SAR writing process.' Compare to Mock #1 — are sentences cleaner?"},
+          {id:"w5-w2",tag:"weekend",text:"Weekend: Deep company research — all active applications",detail:"Latest blog post or press release per company. 1 person from risk/compliance team on LinkedIn per company. Update job tracker."},
+        ],
+        deliverables:["17 total applications","2–3 screening calls handled","Interview Answer Bank updated after every call","CAMS Handbook started","Mock Interview #2 recorded"]
+      },
+      {
+        id:"w6", days:"Days 38–44", title:"Week 6 — Technical Rounds Begin",
+        focus:"SQL take-home tests arriving. Case scenario practice intensifies.",
+        critical:"⚡ Razorpay, PayU, Mastercard send SQL tests 1–2 weeks after HR screening. Stay sharp.",
+        tasks:[
+          {id:"w6-1",tag:"sql",text:"LeetCode Medium SQL — 2 per night",detail:"JOINs + subqueries + GROUP BY combined. Harder than Easy — expect to struggle. That is the point."},
+          {id:"w6-2",tag:"sql",text:"Build mock 3-table dataset in SQLite",detail:"merchants, transactions, ip_logs. Write 15 queries joining all 3. Closest simulation to a real fintech SQL test. sqlite.org — free offline tool."},
+          {id:"w6-3",tag:"english",text:"Case scenario framework — 4-5 min, recorded nightly",detail:"Open data → Identify anomalies (name 3 specific red flags) → Cross-reference (what additional data) → Decision (recommend and why). Structured thinking under observation."},
+          {id:"w6-4",tag:"apply",text:"Referral outreach — 5 LinkedIn messages sent",detail:"Use referral template. One per day. Personalize every message. Do not send generic ones."},
+          {id:"w6-5",tag:"apply",text:"Apply to Revolut India + Adyen India + Perfios",detail:"Compliance Analyst + Merchant Risk + Financial Crime. Backup pipeline — keep volume steady."},
+          {id:"w6-w1",tag:"weekend",text:"Weekend: Full SQL take-home simulation",detail:"StrataScratch 30-question test, 45-min timer. Real test conditions. Grade yourself — below 80% means drill weak query types Monday."},
+          {id:"w6-w2",tag:"weekend",text:"Weekend: CAMS study — 30 pages",detail:"Focus on SAR filing requirements and typologies sections — directly reinforces interview domain knowledge."},
+        ],
+        deliverables:["SQL technical tests: ready anytime","5 referral messages sent","20 total applications","Case scenario framework practiced 7 sessions","CAMS: 50+ pages completed"]
+      },
+      {
+        id:"w7", days:"Days 45–51", title:"Week 7 — Final Round Interviews",
+        focus:"Panel interviews. Stakeholder rounds. Every live process is leverage — do not cancel anything.",
+        critical:"⚡ If one offer looks close, accelerate others — do not withdraw. Competing offers = negotiation power.",
+        tasks:[
+          {id:"w7-1",tag:"sql",text:"1 complex query per night — rotate types",detail:"Window function tonight, subquery tomorrow, CASE WHEN with JOIN next. Do not let skill rust during interviews."},
+          {id:"w7-2",tag:"english",text:"Pre-interview protocol — night before every interview",detail:"(1) Read JD — highlight 3 emphasized skills. (2) Read most relevant STAR story aloud 3x. (3) Practice opening 90 sec. (4) Say salary range aloud until natural. (5) Prepare 2 smart questions."},
+          {id:"w7-3",tag:"english",text:"Post-interview debrief — within 30 min of every interview",detail:"Write every question asked. Note what they focused on, what surprised you, where you felt weak. This intelligence file is gold."},
+          {id:"w7-4",tag:"apply",text:"3–4 new applications this week",detail:"Never stop. Fintech roles get cancelled. Pipeline is your insurance policy."},
+          {id:"w7-w1",tag:"weekend",text:"Weekend: Mock Interview #3 — 45 min, someone else asks questions",detail:"Full case scenario + SQL on paper + salary negotiation simulation. Compare to Mock #1. The difference should be visible and audible."},
+          {id:"w7-w2",tag:"weekend",text:"Weekend: Resignation plan — write privately",detail:"What to say to manager. What date to join. Notice period logistics. Being prepared means you will not panic when an offer arrives."},
+        ],
+        deliverables:["Final round interviews attended","Question Bank updated after every interview","Mock Interview #3 completed","25+ total applications","Resignation plan privately written"]
+      },
+      {
+        id:"w8", days:"Days 52–60", title:"Week 8 — Offers Arriving",
+        focus:"First offers. Accelerate slower pipelines. Negotiate every single one.",
+        critical:"⚡ 2 weeks of extra lead time vs old plan. Offers arriving now instead of Week 11–12.",
+        tasks:[
+          {id:"w8-1",tag:"sql",text:"Stay sharp — 1 query per night until signed",detail:"Late-arriving companies still SQL test. Never let this skill drop after 7 weeks of building it."},
+          {id:"w8-2",tag:"english",text:"Negotiation scripts — daily practice until natural",detail:"Salary expectation answer. Counter-offer response. 'Can we look at variable instead?' All spoken out loud until zero hesitation."},
+          {id:"w8-3",tag:"apply",text:"Pipeline acceleration messages for slow processes",detail:"'I have received an offer and need to make a decision by [date]. I am very interested in your role — would it be possible to expedite?' This is professional. Do it without guilt."},
+          {id:"w8-w1",tag:"weekend",text:"Weekend: Offer evaluation — score each offer",detail:"Salary 40% + Brand 25% + Growth trajectory 25% + Culture/WFH 10%. Choose highest on 90% that matters."},
+          {id:"w8-w2",tag:"weekend",text:"Weekend: Documents prepared for background verification",detail:"Scan: current offer letter, last 3 payslips, degree certificates, PAN, Aadhaar. Digital folder ready."},
+        ],
+        deliverables:["At least 1 offer received by Day 60","Negotiation attempted on every offer","Offer evaluation framework used","Target: ₹9L floor, ₹11–13L realistic"]
+      }
+    ]
+  },
+  {
+    id: 3,
+    theme: "CLOSE, RESIGN, PREPARE",
+    tagline: "Convert the best offer. Exit professionally. Enter strong.",
+    weeks: [
+      {
+        id:"w9", days:"Days 61–67", title:"Week 9 — Final Conversions",
+        focus:"Close best processes. Delay others diplomatically. One company at a time.",
+        critical:"⚡ 1-week extension from offering company is professional and commonly accepted. Do not burn a good offer chasing a perfect one.",
+        tasks:[
+          {id:"w9-1",tag:"sql",text:"1 query per night until signed",detail:"Maintain the habit. A late-arriving process can still test you."},
+          {id:"w9-2",tag:"english",text:"Final round prep — research the interviewer",detail:"Find them on LinkedIn. Prepare one specific question about their work: 'I noticed you work on APAC compliance — how does risk collaborate with your division?' Instant rapport."},
+          {id:"w9-3",tag:"english",text:"Interview close — practice your closing statement",detail:"'I am very excited about this opportunity and believe my experience in SAR writing and merchant risk is directly applicable to what you are building here. I would love to move forward.'"},
+          {id:"w9-w1",tag:"weekend",text:"Weekend: Begin new company preparation",detail:"If fintech: understand their payment flow, merchant onboarding, chargeback process. If Big 4: read 1 recent financial crime publication from that firm. Walk in knowing more than expected."},
+        ],
+        deliverables:["Final rounds completed","Offer letter: at least 1 in hand","Offer extension requested if needed","New company research started"]
+      },
+      {
+        id:"w10", days:"Days 68–74", title:"Week 10 — Accept Best Offer",
+        focus:"Final negotiation. Formal acceptance. Documents ready.",
+        critical:"⚡ Never resign before offer letter is in your email. Verbal offers are not offers.",
+        tasks:[
+          {id:"w10-1",tag:"resume",text:"Acceptance checklist — verify all terms in writing",detail:"Fixed CTC breakdown. Joining date. Role title. Background verification requirements. Probation period. Notice period at new company."},
+          {id:"w10-2",tag:"english",text:"Final salary extraction attempt — one more try",detail:"'I have reviewed the offer carefully and I am very excited. The one area I would love to revisit is the fixed component — is there any flexibility to move from ₹X to ₹Y?' Some say yes. Every rupee negotiated here compounds for years."},
+          {id:"w10-w1",tag:"weekend",text:"Weekend: Documents scan and organise",detail:"Offer letter, last 3 payslips, all education certificates, PAN, Aadhaar. Physical and digital folder both ready."},
+          {id:"w10-w2",tag:"weekend",text:"Weekend: Draft resignation letter",detail:"'I am writing to formally notify you of my resignation from my position as [Title], with my last working day being [Date]. I am grateful for the opportunities provided during my time here.' Simple. Professional. No explanation needed."},
+        ],
+        deliverables:["Offer letter received and reviewed","Final negotiation attempted","Acceptance confirmed in writing","Documents scanned and ready"]
+      },
+      {
+        id:"w11", days:"Days 75–81", title:"Week 11 — Resign + Notice Period",
+        focus:"Professional exit. Complete handovers. AML is a small industry — exit immaculately.",
+        critical:"⚡ Every person you work with today is a potential reference, collaborator, or recruiter in 3 years.",
+        tasks:[
+          {id:"w11-1",tag:"resume",text:"Submit resignation — speak to manager privately",detail:"'I have received an opportunity that aligns with my long-term career goals.' Do not mention company name. Do not burn bridges."},
+          {id:"w11-2",tag:"resume",text:"Complete all handovers to a high standard",detail:"Document open cases clearly. Train replacement genuinely. Maintain QC score until last day."},
+          {id:"w11-3",tag:"resume",text:"Request LinkedIn recommendation from manager or senior colleague",detail:"'I am building my professional profile and would really value your perspective on my work here.' Do this in Week 11 — last opportunity."},
+          {id:"w11-4",tag:"linkedin",text:"Update LinkedIn with new role + publish announcement post",detail:"'Excited to share my next chapter — joining [Company] as [Title].' Generates goodwill and referral visibility for your next switch."},
+          {id:"w11-w1",tag:"weekend",text:"Weekend: CAMS study plan — 12-month timeline built",detail:"Use notice period evenings: 30 min CAMS study daily. acams.org handbook + FATF typologies + FinCEN guidance. All free."},
+        ],
+        deliverables:["Resignation submitted professionally","LinkedIn updated + announcement posted","Recommendation requested","CAMS study activated","New company research complete before Day 1"]
+      },
+      {
+        id:"w12", days:"Days 82–90", title:"Week 12–13 — Day 1 Ready",
+        focus:"Enter your new company with preparation and a plan for the next 90 days.",
+        critical:"⚡ Reputation at a new company is built in the first 30 days. Walk in prepared.",
+        tasks:[
+          {id:"w12-1",tag:"resume",text:"First 30 days strategy — clear before Day 1",detail:"Week 1: listen more than talk. Week 2: deliver first work above standard. Week 3: ask one smart question in team meeting. Week 4: identify one process to improve — raise it in Week 6, not before."},
+          {id:"w12-2",tag:"resume",text:"Save Interview Answer Bank permanently",detail:"You will use it in 2–3 years for your next switch. Store in Google Drive."},
+          {id:"w12-w1",tag:"weekend",text:"Day 90: Calculate result",detail:"CTC before: ₹4.5L. CTC after: ₹9L+. That is 100%+ minimum. If you executed tightly — ₹11–13L is 144–188% hike. You earned it."},
+        ],
+        deliverables:["Joined new company","First 30-day strategy clear","CAMS plan active","SQL intermediate target set for Year 2","100%+ hike achieved"]
+      }
+    ]
+  }
+];
+
+const LINKEDIN_DATA = [
+  {
+    week:"Week 1", timing:"Publish Day 6–7 (Tue–Thu 8–10 AM)",
+    title:"Why transaction velocity matters more than transaction size",
+    hook:"Most AML alerts are triggered by how much money moved. The more interesting question — in a payments environment — is how fast.",
+    body:`Most AML alerts are triggered by how much money moved. The more interesting question — in a payments environment — is how fast.
+
+A single large transaction is visible. A hundred small transactions in 40 minutes, from three different devices, processed through the same merchant account — that is harder to catch with a static threshold rule.
+
+Velocity is not just a fraud indicator. It is a pattern. And patterns tell you something that individual data points cannot.
+
+What I look for when reviewing merchant accounts is not just the transaction amount. It is the gap between transactions. The device rotation. The timing cluster relative to the merchant's stated business hours.
+
+The data is there. You just have to know what question to ask it.`,
+    hashtags:"#MerchantRisk #TransactionMonitoring #FinancialCrime #PaymentsCompliance #AML"
+  },
+  {
+    week:"Week 2 (early)", timing:"Publish Day 9–10",
+    title:"Fintech merchant risk vs traditional AML — why they are different problems",
+    hook:"Most AML training teaches you to look for the criminal. In fintech merchant risk, the criminal is often not your customer.",
+    body:`Most AML training teaches you to look for the criminal. In fintech merchant risk, the criminal is often not your customer.
+
+Your customer is the merchant. The criminal is using your merchant to process their payments — and your merchant may have no idea. Or they do know, and the economics made it easy to look away.
+
+This changes everything about how you investigate.
+
+In a bank, your suspicious actor has a name, a KYC file, a transaction history. You are following a person. In a payment gateway, you are following behaviour across a merchant portfolio. Does this merchant's transaction pattern make sense for what they claim to sell? Does the geography of their customers match their business model?
+
+The data is different too. You are not just looking at debit and credit entries. You are looking at IP clusters, device fingerprints, timestamp sequences, average ticket drift over time.
+
+Fintech moved payments faster than compliance frameworks could keep up. The risk function inside a payment gateway is one of the more intellectually interesting places to work in financial crime right now.`,
+    hashtags:"#MerchantRisk #FintechCompliance #FinancialCrime #PaymentsRisk #AML"
+  },
+  {
+    week:"Week 2 (late)", timing:"Publish Day 12–13",
+    title:"Transaction laundering — why it is harder to catch than money laundering",
+    hook:"Transaction laundering does not look like crime. That is the entire point.",
+    body:`Transaction laundering does not look like crime. That is the entire point.
+
+A legitimate-looking merchant. A real website. Transactions that pass basic velocity checks. Nothing that triggers an obvious alert.
+
+What is actually happening: a third party is processing their payments through this merchant's account. The merchant either knows, or is being paid not to ask questions.
+
+What makes it difficult is that the underlying payment is technically real. Money moved. A card was charged. Every system in the chain saw a clean transaction.
+
+Where it starts to unravel is in the behaviour, not the transaction itself. A merchant in a specific product category whose customer geography makes no sense for that business. Chargeback patterns inconsistent with the product category. Average ticket sizes that drift slowly over time — slowly enough that static rules do not flag it.
+
+None of these alone means anything. Together they tell a story.
+
+The challenge is that you need to understand what normal looks like for that merchant type before you can see what is wrong. That takes pattern recognition and a willingness to sit with ambiguous data before jumping to a conclusion.`,
+    hashtags:"#TransactionLaundering #MerchantRisk #FinancialCrime #PaymentsCompliance #AML"
+  },
+  {
+    week:"Week 3", timing:"Publish Day 17–18",
+    title:"Writing SARs across three regions — what nobody tells you",
+    hook:"APAC, EMEA, and Americas have different SAR requirements, different thresholds, and different escalation standards.",
+    body:`APAC, EMEA, and Americas have different SAR requirements, different regulatory thresholds, and different escalation standards.
+
+What nobody tells you when you start writing SARs across regions is that the underlying investigation logic is the same everywhere — but how you document it has to shift completely depending on who is reading it.
+
+A UK SAR is not an American SAR with different letterhead. The narrative structure, the threshold logic, the level of specificity expected — all of it is calibrated to a different regulatory audience.
+
+What this means in practice: you are not just writing about what happened. You are writing for a specific reader, in a specific jurisdiction, who has a specific set of questions they need answered before they can act.
+
+The most common mistake I see is treating SAR writing as documentation. It is not. It is communication. The investigation might be excellent. If the SAR does not convey it clearly to the right audience, the work is incomplete.`,
+    hashtags:"#SARWriting #AML #FinancialCrime #GlobalCompliance #APAC #EMEA"
+  },
+  {
+    week:"Week 4", timing:"Publish Day 24–25",
+    title:"How to identify a mule merchant account",
+    hook:"A mule merchant does not look like a typical criminal. They often look like a legitimate small business.",
+    body:`A mule merchant does not look like a typical criminal. They often look like a legitimate small business.
+
+The onboarding documents look reasonable. The website exists. The product category is plausible. They pass basic screening.
+
+What gives them away is operational behaviour over time.
+
+The merchant receives funds from customers — but the customer profile does not match what the business claims to serve. The refund pattern is abnormal for the category. There is no evidence of the normal friction that comes with running a real business: disputes, delivery delays, seasonal variation.
+
+The transactions are too clean. Too consistent. Real businesses have noise in their data. Mule accounts tend not to.
+
+The other indicator is speed of fund movement. Legitimate businesses accumulate, then settle. Mule accounts move money out quickly — sometimes within hours of receipt.
+
+Pattern recognition is the skill. You cannot write a rule for every variation. You have to understand what a real business looks like well enough to notice when something is pretending to be one.`,
+    hashtags:"#MerchantRisk #MuleMerchant #FinancialCrime #PaymentFraud #AML"
+  },
+  {
+    week:"Week 5+", timing:"Publish weekly Tue–Thu 8–10 AM",
+    title:"Ongoing — 1 post per week from your real experience",
+    hook:"Any case observation, typology pattern, investigation insight, or financial crime myth-busting from your actual work.",
+    body:`Topic ideas for ongoing weeks:
+
+— "What PEP screening actually involves vs what people think it involves"
+— "Why IP geolocation is useful but not reliable on its own"
+— "The difference between a suspicious transaction and a suspicious pattern"
+— "What makes a good escalation report — and what makes a weak one"
+— "Cross-border transactions and why jurisdiction matters in SAR writing"
+— "What I wish I knew before writing my first SAR"
+
+3 paragraphs. Simple English. No buzzwords. Written like you are explaining it to a smart colleague who is not in compliance. That framing produces the best posts.`,
+    hashtags:"#AML #FinancialCrime #MerchantRisk #PaymentsCompliance #FinancialCrimeAnalyst"
+  }
+];
+
+const JOBS_DATA = [
+  {company:"Razorpay",role:"Risk Management Analyst / Risk Analyst",fit:"high",wave:"Wave 1 — Day 15",
+   tags:["Merchant Risk","SAR Writing","Transaction Monitoring","Fintech Direct"],
+   note:"Highest profile fit. JD almost exactly matches your current responsibilities. SQL test likely in Round 2. Apply with Resume Version A.",
+   link:"https://razorpay.com/jobs/"},
+  {company:"PayU India",role:"Merchant Risk / Financial Crime Analyst",fit:"high",wave:"Wave 1 — Day 15",
+   tags:["Merchant Risk","Payments","Gurugram Based","Fintech Direct"],
+   note:"Gurugram office — no relocation needed. Strong merchant acquiring operation. Your payment gateway experience is directly applicable.",
+   link:"https://corporate.payu.com/careers/"},
+  {company:"Pine Labs",role:"Fraud / Compliance Analyst",fit:"high",wave:"Wave 1 — Day 15",
+   tags:["Acquiring Fraud","Merchant Risk","Fintech Direct","Gurugram"],
+   note:"Large acquiring business. Merchant risk team growing. Resume Version A. Mention acquiring fraud knowledge specifically.",
+   link:"https://www.pinelabs.com/careers"},
+  {company:"Mastercard GCC India",role:"Financial Crime Analyst",fit:"high",wave:"Wave 1 — Day 15",
+   tags:["GCC Role","Financial Crime","Open to Shift Work","Gurugram"],
+   note:"Add 'Open to shift alignment' in application. GCC roles are harder to fill — your shift openness is a real advantage here. Resume Version B.",
+   link:"https://careers.mastercard.com"},
+  {company:"Deloitte USI",role:"Financial Crime Investigator — Junior Analyst",fit:"high",wave:"Wave 1 — Apply This Week",
+   tags:["Big 4","AML/KYC","Advisory","Gurugram"],
+   note:"Off-campus drive currently running. Fixed Term Hire but Big 4 brand is worth it. Process takes 6–8 weeks — apply immediately, do not wait for Day 15.",
+   link:"https://usijobs.deloitte.com"},
+  {company:"Tide India",role:"Financial Crime Specialist",fit:"med",wave:"Wave 1 — Day 15",
+   tags:["2LOD Role","Fintech","Delhi/Gurugram","SME Fintech"],
+   note:"Slightly senior to your current level but worth applying — position your SAR writing + investigation depth strongly. Mention PMLA and FIU-IND awareness.",
+   link:"https://www.tide.co/careers/"},
+  {company:"American Express India",role:"Fraud Risk Analyst",fit:"high",wave:"Wave 1 — Day 17",
+   tags:["GCC Role","Fraud Risk","Gurugram","Open to Night Shift"],
+   note:"Strong GCC operation in Gurugram. Fraud Risk roles overlap heavily with your merchant investigation background. Resume Version B.",
+   link:"https://jobs.americanexpress.com"},
+  {company:"KPMG Global Services",role:"AML / Financial Crime Analyst",fit:"med",wave:"Wave 2 — Day 30",
+   tags:["Big 4","AML","Advisory","Gurugram"],
+   note:"Big 4 advisory gives you international exposure faster than fintech. Salary starts lower but brand value accelerates future moves. Resume Version C.",
+   link:"https://www.kpmg.com/in/en/home/careers.html"},
+  {company:"PhonePe",role:"Financial Crime Analyst",fit:"high",wave:"Wave 2 — Day 30",
+   tags:["Fintech Direct","UPI/Payments","FC Analyst","Bangalore/Remote"],
+   note:"Large and growing compliance team. UPI transaction monitoring experience translates directly. May require some Bangalore flexibility.",
+   link:"https://www.phonepe.com/careers/"},
+  {company:"Cashfree Payments",role:"Compliance / Risk Analyst",fit:"high",wave:"Wave 2 — Day 30",
+   tags:["Fintech Direct","Merchant Risk","Growing Team","Remote Possible"],
+   note:"Fast-growing payment gateway. Compliance team building out. Your merchant investigation background is exactly what they need at this stage.",
+   link:"https://www.cashfree.com/careers"},
+  {company:"EY GDS India",role:"Forensics & Integrity Analyst",fit:"med",wave:"Wave 2 — Day 30",
+   tags:["Big 4","Forensics","Advisory","Gurugram/Gurgaon"],
+   note:"Forensics track at EY is different from pure AML — more fraud investigation, FCPA work. Opens international mobility faster than pure compliance roles.",
+   link:"https://careers.ey.com/ey/jobs"},
+  {company:"Revolut India",role:"Compliance Analyst",fit:"med",wave:"Wave 3 — Day 45",
+   tags:["Global Fintech","Compliance","Fast Growth","Remote/Hybrid"],
+   note:"High-growth global fintech. Strong brand for international mobility. Process can be slow — apply early and follow up. English fluency tested carefully here.",
+   link:"https://www.revolut.com/en-GB/careers/"},
+  {company:"Western Union India",role:"AML Compliance Analyst",fit:"med",wave:"Wave 3 — Day 45",
+   tags:["Global Payments","AML","APAC/EMEA Exposure","Open to Shifts"],
+   note:"Cross-border payments experience is genuinely valuable for UAE and Singapore relocation later. Mention APAC SAR writing explicitly.",
+   link:"https://careers.westernunion.com"},
+];
+
+const NEG_DATA = [
+  {
+    scenario:"They ask: 'What is your current CTC?'",
+    type:"Deflection",
+    context:"You are not legally required to disclose this in India. Disclosing ₹4.5L anchors the conversation low. Avoid it if possible.",
+    say:`"I would prefer to discuss what this role offers and whether it aligns with the market range. Based on my research, I am targeting ₹11–14L for this role."`,
+    followup:`If they insist: "My current package is structured in a way that doesn't fully reflect the market rate for my skill set — which is why I am looking to move. I would rather discuss what this role is budgeted for."`,
+    rule:"If they absolutely require a number before proceeding: give your total compensation including any variable, and immediately pivot to your target range."
+  },
+  {
+    scenario:"They ask: 'What are your salary expectations?'",
+    type:"Opening Anchor",
+    context:"Always give a range, not a number. The floor of your range should be your target number — not your actual floor.",
+    say:`"Based on my research into market rates for this role and the scope of work — multi-jurisdictional SAR writing, merchant risk investigation, payments environment — I am targeting ₹11–14L. I am open to discussing the full package structure."`,
+    followup:`Do not fill the silence after this. Stop talking. Let them respond. The first person to speak after the anchor loses negotiation leverage.`,
+    rule:"Never apologise for the number. Never say 'I know that might be high but...' — that pre-concedes ground you have not been asked to concede."
+  },
+  {
+    scenario:"They offer ₹9–9.5L — below your target",
+    type:"Counter Offer",
+    context:"This is normal. The first offer is rarely the best offer. You have room to push.",
+    say:`"Thank you so much — I am genuinely excited about this opportunity and I want to make this work. Based on my experience writing SARs across APAC, EMEA and Americas regions and the market range I have researched, would it be possible to consider ₹11.5L? That is where I feel the role is positioned."`,
+    followup:`If they say ₹10L is the maximum: "I understand completely. Could we look at the variable component, performance review timeline, or a joining bonus to bridge the difference? I want to make sure we start this in the right way."`,
+    rule:"Always counter exactly once before accepting or walking away. Never counter twice on the same number — it signals desperation."
+  },
+  {
+    scenario:"They say: 'That is the maximum we can offer'",
+    type:"Final Push",
+    context:"Sometimes true, sometimes a test of your resolve. Always attempt one more angle before accepting.",
+    say:`"I appreciate the transparency. Could we revisit the structure slightly — perhaps a higher variable component tied to clear performance targets, or an accelerated review at 6 months? I am fully committed to delivering strong results and I want to make sure the package reflects that over time."`,
+    followup:`If genuinely no flexibility: "I understand. I want to join and I am committed to making this work. Can we confirm the joining bonus and the performance review timeline in writing alongside the offer letter?"`,
+    rule:"Getting something in writing — even a 6-month review commitment — is worth more than a verbal promise of future increases."
+  },
+  {
+    scenario:"You have 2 competing offers",
+    type:"Leverage Play",
+    context:"This is your strongest negotiating position. Use it ethically — do not fabricate offers or numbers.",
+    say:`"I want to be transparent with you — I have received another offer and I need to make a decision by [date]. You are my preferred choice because of [specific reason]. Is there any flexibility on the package that would allow me to commit to you today?"`,
+    followup:`Most companies will move when they know they are competing. Even if they cannot match the number, they may improve title, joining bonus, or review timeline.`,
+    rule:"Never name the competing company or reveal their exact offer. You are creating urgency, not an auction."
+  },
+  {
+    scenario:"They ask you to join faster than your notice period",
+    type:"Notice Period Negotiation",
+    context:"Your notice period is a professional obligation. Do not compromise it to please a new employer.",
+    say:`"I want to join as soon as I responsibly can. My current notice period is [X] days and I intend to honour it fully — that is the standard I would maintain at your organisation too. I can commit to [date] as my joining date."`,
+    followup:`If they push: "I can speak to my current organisation about an early release, but I cannot guarantee it. What I can guarantee is that I will be fully committed from Day 1 whenever I join."`,
+    rule:"A company that pressures you to break professional commitments to join them faster is giving you information about how they operate. Factor that into your decision."
+  }
+];
+
+// ═══════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════
+
+function getChecked() {
+  try { return JSON.parse(localStorage.getItem('roadmap_tasks') || '{}'); } catch { return {}; }
+}
+function saveChecked(obj) {
+  try { localStorage.setItem('roadmap_tasks', JSON.stringify(obj)); } catch {}
+}
+
+let checked = getChecked();
+let currentMonth = 1;
+
+// ═══════════════════════════════════════════════════
+// RENDER PLAN
+// ═══════════════════════════════════════════════════
+
+function renderPlan(monthId) {
+  const month = MONTHS.find(m => m.id === monthId);
+  const el = document.getElementById('month-content');
+  let html = `
+    <div class="card card-accent-amber" style="margin-bottom:1rem;">
+      <div style="font-family:var(--mono);font-size:0.6rem;color:var(--muted);margin-bottom:0.2rem;">${month.id === 1 ? 'Days 1–30' : month.id === 2 ? 'Days 31–60' : 'Days 61–90'}</div>
+      <div style="font-size:1rem;font-weight:700;color:var(--amber);">${month.theme}</div>
+      <div style="font-size:0.8rem;color:var(--muted);font-style:italic;margin-top:0.2rem;">"${month.tagline}"</div>
+    </div>`;
+  month.weeks.forEach(week => {
+    const total = week.tasks.length;
+    const done = week.tasks.filter(t => checked[t.id]).length;
+    const pct = total > 0 ? Math.round(done/total*100) : 0;
+    html += `
+    <div class="week-card" id="wc-${week.id}">
+      <button class="week-header" onclick="toggleWeek('${week.id}')">
+        <div style="flex:1;">
+          <div class="week-title">${week.title}</div>
+          <div class="week-sub">${week.days} · ${week.focus}</div>
+          ${week.critical ? `<div class="week-critical">${week.critical}</div>` : ''}
+          <div class="week-prog">${done}/${total} tasks · ${pct}%</div>
+        </div>
+        <div class="week-chevron" id="chev-${week.id}">▾</div>
+      </button>
+      <div class="week-body" id="wb-${week.id}">
+        <div class="task-section-label">Weeknight Tasks</div>`;
+    week.tasks.filter(t => t.tag !== 'weekend').forEach(task => {
+      const isDone = !!checked[task.id];
+      html += `
+        <div class="task-item${isDone?' done':''}" onclick="toggleTask('${task.id}','${week.id}','${monthId}')">
+          <div class="task-check"><span class="task-check-tick">✓</span></div>
+          <div class="task-content">
+            <span class="task-tag tag-${task.tag}">${task.tag.toUpperCase()}</span>
+            <span class="task-text">${task.text}</span>
+            <div class="task-detail">${task.detail}</div>
+          </div>
+        </div>`;
+    });
+    const weekendTasks = week.tasks.filter(t => t.tag === 'weekend');
+    if(weekendTasks.length) {
+      html += `<div class="task-section-label">Weekend Tasks</div>`;
+      weekendTasks.forEach(task => {
+        const isDone = !!checked[task.id];
+        html += `
+        <div class="task-item${isDone?' done':''}" onclick="toggleTask('${task.id}','${week.id}','${monthId}')">
+          <div class="task-check"><span class="task-check-tick">✓</span></div>
+          <div class="task-content">
+            <span class="task-tag tag-weekend">WEEKEND</span>
+            <span class="task-text">${task.text}</span>
+            <div class="task-detail">${task.detail}</div>
+          </div>
+        </div>`;
+      });
+    }
+    html += `
+        <div class="task-section-label" style="margin-top:1rem;">Week Deliverables</div>`;
+    week.deliverables.forEach(d => {
+      html += `<div class="deliverable"><span class="deliverable-dot">◆</span><span>${d}</span></div>`;
+    });
+    html += `</div></div>`;
+  });
+  el.innerHTML = html;
+  updateOverall();
+}
+
+function toggleWeek(id) {
+  const body = document.getElementById('wb-'+id);
+  const chev = document.getElementById('chev-'+id);
+  body.classList.toggle('open');
+  chev.classList.toggle('open');
+}
+
+function toggleTask(taskId, weekId, monthId) {
+  checked[taskId] = !checked[taskId];
+  saveChecked(checked);
+  renderPlan(parseInt(monthId));
+  // keep week open
+  const body = document.getElementById('wb-'+weekId);
+  if(body) body.classList.add('open');
+  const chev = document.getElementById('chev-'+weekId);
+  if(chev) chev.classList.add('open');
+}
+
+function updateOverall() {
+  let total = 0, done = 0;
+  MONTHS.forEach(m => m.weeks.forEach(w => {
+    total += w.tasks.length;
+    done += w.tasks.filter(t => checked[t.id]).length;
+  }));
+  const pct = total > 0 ? Math.round(done/total*100) : 0;
+  document.getElementById('overall-bar').style.width = pct+'%';
+  document.getElementById('overall-label').textContent = `${done} of ${total} tasks complete`;
+  document.getElementById('overall-pct').textContent = pct+'%';
+}
+
+function resetAll() {
+  if(!confirm('Reset all progress? This cannot be undone.')) return;
+  checked = {};
+  saveChecked(checked);
+  renderPlan(currentMonth);
+}
+
+// ═══════════════════════════════════════════════════
+// RENDER LINKEDIN
+// ═══════════════════════════════════════════════════
+
+function renderLinkedIn() {
+  const el = document.getElementById('linkedin-posts');
+  let html = '';
+  LINKEDIN_DATA.forEach((post, i) => {
+    html += `
+    <div class="li-week">
+      <div class="li-week-header" onclick="toggleLI(${i})">
+        <div class="li-week-num">${post.week}</div>
+        <div>
+          <div class="li-week-title">${post.title}</div>
+          <div class="li-week-hook">${post.timing}</div>
+        </div>
+      </div>
+      <div class="li-body" id="li-${i}">
+        <div class="li-field">
+          <div class="li-field-label">Opening Hook</div>
+          <div class="li-field-text">${post.hook}</div>
+        </div>
+        <div class="li-field">
+          <div class="li-field-label">Full Post Draft</div>
+          <div class="li-field-text" id="lbody-${i}">${post.body}</div>
+          <button class="copy-btn" id="copybtn-${i}" onclick="copyPost(${i})">Copy post</button>
+        </div>
+        <div class="li-hashtags">${post.hashtags}</div>
+        <div class="li-field" style="margin-top:0.8rem;">
+          <div class="li-field-label" style="color:var(--amber);">Before posting</div>
+          <div style="font-size:0.77rem;color:var(--muted);line-height:1.6;">Read it out loud. Change any word that does not sound like you. Add 1 sentence from your own experience — anonymized. That sentence makes the entire post feel different from anything else in the feed.</div>
+        </div>
+      </div>
+    </div>`;
+  });
+  el.innerHTML = html;
+}
+
+function toggleLI(i) {
+  const el = document.getElementById('li-'+i);
+  el.classList.toggle('open');
+}
+
+function copyPost(i) {
+  const text = LINKEDIN_DATA[i].body + '\n\n' + LINKEDIN_DATA[i].hashtags;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copybtn-'+i);
+    btn.textContent = '✓ Copied';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy post'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+// ═══════════════════════════════════════════════════
+// RENDER JOBS
+// ═══════════════════════════════════════════════════
+
+function renderJobs() {
+  const el = document.getElementById('jobs-list');
+  let html = '';
+  ['Wave 1 — Day 15','Wave 1 — Apply This Week','Wave 1 — Day 17','Wave 2 — Day 30','Wave 3 — Day 45'].forEach(wave => {
+    const wjobs = JOBS_DATA.filter(j => j.wave === wave);
+    if(!wjobs.length) return;
+    const wLabel = wave.includes('Week') ? '🟡 Apply This Week' : wave.includes('15') ? '🟢 Wave 1 — Day 15' : wave.includes('17') ? '🟢 Wave 1 — Day 17' : wave.includes('30') ? '🟡 Wave 2 — Day 30' : '🔵 Wave 3 — Day 45';
+    html += `<div class="sec-label" style="margin-top:1rem;">${wLabel}</div>`;
+    wjobs.forEach(job => {
+      html += `
+      <div class="job-card">
+        <div class="job-top">
+          <div>
+            <div class="job-company">${job.company}</div>
+            <div class="job-role">${job.role}</div>
+          </div>
+          <span class="job-fit ${job.fit==='high'?'fit-high':'fit-med'}">${job.fit==='high'?'High Fit':'Med Fit'}</span>
+        </div>
+        <div class="job-tags">${job.tags.map(t=>`<span class="job-tag">${t}</span>`).join('')}</div>
+        <div class="job-note">${job.note}</div>
+        <div class="job-timing">⏰ ${job.wave}</div>
+        <a class="job-apply" href="${job.link}" target="_blank">→ Careers Page</a>
+      </div>`;
+    });
+  });
+  el.innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════
+// RENDER NEGOTIATE
+// ═══════════════════════════════════════════════════
+
+function renderNegotiate() {
+  const el = document.getElementById('negotiate-list');
+  let html = '';
+  NEG_DATA.forEach((n, i) => {
+    html += `
+    <div class="neg-card">
+      <div class="neg-header" onclick="toggleNeg(${i})">
+        <div>
+          <div class="neg-scenario">${n.scenario}</div>
+        </div>
+        <span class="neg-type">${n.type}</span>
+      </div>
+      <div class="neg-body" id="neg-${i}">
+        <div class="neg-context">${n.context}</div>
+        <div class="neg-say">
+          <div class="neg-say-label">Say exactly this</div>
+          ${n.say}
+        </div>
+        <div class="neg-followup">
+          <div class="neg-followup-label">If they push back</div>
+          ${n.followup}
+        </div>
+        <div class="neg-rule">📌 ${n.rule}</div>
+      </div>
+    </div>`;
+  });
+  el.innerHTML = html;
+}
+
+function toggleNeg(i) {
+  document.getElementById('neg-'+i).classList.toggle('open');
+}
+
+// ═══════════════════════════════════════════════════
+// NAV
+// ═══════════════════════════════════════════════════
+
+function showTab(tabId, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-'+tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+function showMonth(id, el) {
+  currentMonth = id;
+  document.querySelectorAll('.m-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  renderPlan(id);
+}
+
+// ═══════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════
+
+renderPlan(1);
+renderLinkedIn();
+renderJobs();
+renderNegotiate();
+updateOverall();
+</script>
+</body>
+</html>
